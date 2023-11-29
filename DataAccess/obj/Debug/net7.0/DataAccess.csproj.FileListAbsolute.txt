@@ -1,0 +1,17 @@
+C:\Users\ROG\source\repos\Presentation\DataAccess\bin\Debug\net7.0\DataAccess.deps.json
+C:\Users\ROG\source\repos\Presentation\DataAccess\bin\Debug\net7.0\DataAccess.runtimeconfig.json
+C:\Users\ROG\source\repos\Presentation\DataAccess\bin\Debug\net7.0\DataAccess.dll
+C:\Users\ROG\source\repos\Presentation\DataAccess\bin\Debug\net7.0\DataAccess.pdb
+C:\Users\ROG\source\repos\Presentation\DataAccess\bin\Debug\net7.0\Common.dll
+C:\Users\ROG\source\repos\Presentation\DataAccess\bin\Debug\net7.0\Common.pdb
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfo.cs
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CopyComplete
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\DataAccess.dll
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\refint\DataAccess.dll
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\DataAccess.pdb
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\DataAccess.genruntimeconfig.cache
+C:\Users\ROG\source\repos\Presentation\DataAccess\obj\Debug\net7.0\ref\DataAccess.dll

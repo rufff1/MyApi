@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Presentation</name>
+    </assembly>
+    <members>
+        <member name="M:Presentation.Controllers.AuthController.RegisterAsync(Business.DTOs.Auth.Request.AuthRegisterDTO)">
+            <summary>
+            İstifadəçinin qeydiyyatdan keçməsi üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.AuthController.LoginAsync(Business.DTOs.Auth.Request.AuthLoginDTO)">
+            <summary>
+            İstifadəçilərin daxil olması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CategoryController.GetAllAsync">
+            <summary>
+            Category siyahısını götürmək üçün
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.CategoryController.GetAsync(System.Int32)">
+            <summary>
+             Category id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CategoryController.CreateAsync(Business.DTOs.Product.Request.CategoryCreateDTO)">
+            <summary>
+            category yaradılması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CategoryController.UpdateAsync(Business.DTOs.Category.Request.CategoryUpdateDTO)">
+            <summary>
+            category redaktə olunması üçün
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CategoryController.DeleteAsync(System.Int32)">
+            <summary>
+             Category silinməsi
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.ProductController.GetAllAsync">
+            <summary>
+            Product siyahısını götürmək üçün
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.ProductController.GetAsync(System.Int32)">
+            <summary>
+             Product id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.ProductController.CreateAsync(Business.DTOs.Product.Request.ProductCreateDTO)">
+            <summary>
+            Product yaradılması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.ProductController.UpdateAsync(System.Int32,Business.DTOs.Product.Request.ProductUpdateDTO)">
+            <summary>
+            Product redaktə olunması üçün
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.ProductController.DeleteAsync(System.Int32)">
+            <summary>
+             Product silinməsi
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.RoleController.GetAllAsync">
+            <summary>
+            Rolların siyahısı
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.RoleController.CreateAsync(Business.DTOs.Role.Request.RoleCreateDTO)">
+            <summary>
+             Rol yaratmaq üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TagController.GetAsync(System.Int32)">
+            <summary>
+             Tag id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TagController.GetAllAsync">
+            <summary>
+            Tag siyahısını götürmək üçün
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.TagController.UpdateAyns(System.Int32,Business.DTOs.Tag.Request.TagUpdateDTO)">
+            <summary>
+            tag redaktə olunması üçün
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TagController.DeleteAsync(System.Int32)">
+            <summary>
+             tag silinməsi
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TagController.CreateAsync(Business.DTOs.Tag.Request.TagCreateDTO)">
+            <summary>
+            tag yaradılması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+    </members>
+</doc>
