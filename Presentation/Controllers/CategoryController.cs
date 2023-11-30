@@ -68,7 +68,6 @@ namespace Presentation.Controllers
         /// <summary>
         /// category redaktə olunması üçün
         /// </summary>
-        /// <param name="id"></param>
         /// <param name="model"></param>
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Response))]

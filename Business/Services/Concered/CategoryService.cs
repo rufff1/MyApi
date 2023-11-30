@@ -62,7 +62,7 @@ namespace Business.Services.Concered
 
 
 
-            bool categoryName = await _context.Categories.AnyAsync(x => x.Name.ToLower() == model.Name.ToLower());
+            bool categoryName = await _context.Categories.AnyAsync(x => x.Name.ToLower().Trim() == model.Name.ToLower().Trim());
 
             if (categoryName)
             {

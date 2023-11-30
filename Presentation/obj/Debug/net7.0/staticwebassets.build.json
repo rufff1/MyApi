@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Qoh3gKzDw4eS5s6yTv0X29oCgeESb+P4q/smcLsPgIQ=",
+  "Hash": "VXIwpplbrzY3Tc3jSqefj3q6grb7kAftYfWY3iRTCSI=",
   "Source": "Presentation",
   "BasePath": "_content/Presentation",
   "Mode": "Default",
@@ -51,12 +51,12 @@
       "OriginalItemSpec": "wwwroot\\img\\category\\2427153e-2c3d-49eb-ac51-9a96989bb799_202311271218370503.jpg"
     },
     {
-      "Identity": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\category\\ca99a622-dfdb-4b23-ab14-e1d5e13b6808_202311291450432016.jpg",
+      "Identity": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\category\\2ad139c8-1453-4c0b-b16f-ebfe24550196_202311301514362401.jpg",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\",
       "BasePath": "_content/Presentation",
-      "RelativePath": "img/category/ca99a622-dfdb-4b23-ab14-e1d5e13b6808_202311291450432016.jpg",
+      "RelativePath": "img/category/2ad139c8-1453-4c0b-b16f-ebfe24550196_202311301514362401.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -65,7 +65,24 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\category\\ca99a622-dfdb-4b23-ab14-e1d5e13b6808_202311291450432016.jpg"
+      "OriginalItemSpec": "wwwroot\\img\\category\\2ad139c8-1453-4c0b-b16f-ebfe24550196_202311301514362401.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\category\\3dab6eb7-c761-464e-818a-ca3fa0ee534a_202311301238161542.jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "img/category/3dab6eb7-c761-464e-818a-ca3fa0ee534a_202311301238161542.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\category\\3dab6eb7-c761-464e-818a-ca3fa0ee534a_202311301238161542.jpg"
     },
     {
       "Identity": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\category\\d508556e-b61a-4572-9ab1-9e72b4e226d4_202311271613423930.jpg",
@@ -389,6 +406,57 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\product\\dc95dc7f-19c7-4d25-b253-ebae53d3a7e6_202311281505234341.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\team\\86bfd1ae-2e61-4dc4-80f0-38a5660fcc49_202311301503523110.jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "img/team/86bfd1ae-2e61-4dc4-80f0-38a5660fcc49_202311301503523110.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\team\\86bfd1ae-2e61-4dc4-80f0-38a5660fcc49_202311301503523110.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\team\\bcc02cec-33db-45b0-b6c8-7e6f283ddaa9_202311301559204234.jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "img/team/bcc02cec-33db-45b0-b6c8-7e6f283ddaa9_202311301559204234.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\team\\bcc02cec-33db-45b0-b6c8-7e6f283ddaa9_202311301559204234.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\team\\ce3ee0c2-611a-4195-aea1-abf3bf88ee55_202311301502155627.jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "img/team/ce3ee0c2-611a-4195-aea1-abf3bf88ee55_202311301502155627.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\team\\ce3ee0c2-611a-4195-aea1-abf3bf88ee55_202311301502155627.jpg"
     }
   ]
 }

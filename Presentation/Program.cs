@@ -122,6 +122,9 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<ITeamPositionRepository, TeamPositionRepository>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+
 
 #endregion
 
@@ -143,6 +146,8 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<ITeamPositionService, TeamPostionService>();
+builder.Services.AddScoped<ITeamService, TeamService>();
 
 
 #endregion
@@ -157,6 +162,8 @@ x.AddProfile(new RoleMappingProfile());
 x.AddProfile(new AuthMappingProfile());
 x.AddProfile(new ProductMappingProfile());
 x.AddProfile(new TagMappingProfile());
+x.AddProfile(new TeamPositionMappingProfile());
+x.AddProfile(new TeamMappingProfile());
 });
 
 

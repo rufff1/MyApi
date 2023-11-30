@@ -37,7 +37,6 @@
             <summary>
             category redaktə olunması üçün
             </summary>
-            <param name="id"></param>
             <param name="model"></param>
         </member>
         <member name="M:Presentation.Controllers.CategoryController.DeleteAsync(System.Int32)">
@@ -116,6 +115,65 @@
             tag yaradılması üçün
             </summary>
             <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TeamController.GetAsync(System.Int32)">
+            <summary>
+             team id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TeamController.GetAllAsync">
+            <summary>
+            team siyahısını götürmək üçün
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.TeamController.CreateAsync(Business.DTOs.Team.Request.TeamCreateDTO)">
+            <summary>
+            team yaradılması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TeamController.UpdateAsync(Business.DTOs.Team.Request.TeamUpdateDTO)">
+            <summary>
+            team redaktə olunması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TeamController.DeleteAsync(System.Int32)">
+            <summary>
+             team silinməsi  
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TeamPositionController.GetAsync(System.Int32)">
+            <summary>
+             position id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TeamPositionController.GetAllAsync">
+            <summary>
+            position siyahısını götürmək üçün
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.TeamPositionController.CreateAsync(Business.DTOs.TeamPosition.Request.TeamPositionCreateDTO)">
+            <summary>
+            position yaradılması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TeamPositionController.UpdateAsync(System.Int32,Business.DTOs.TeamPosition.Request.TeamPositionUpdateDTO)">
+            <summary>
+            position redaktə olunması üçün
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TeamPositionController.DeleteAsnyc(System.Int32)">
+            <summary>
+             position silinməsi
+            </summary>
+            <param name="id"></param>
         </member>
     </members>
 </doc>
