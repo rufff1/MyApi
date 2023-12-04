@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Common.Constants.Product;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,8 @@ namespace Common.Entities
        public int CategoryId { get; set; }
 
         public List<ProductTag> ProductTags { get; set; }
+
+        public ProductType ProductType { get; set; }
 
 
         [NotMapped]

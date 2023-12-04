@@ -7,12 +7,12 @@ namespace Presentation.Middlewares
     public class CustomExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
+     
 
-        public CustomExceptionMiddleware(RequestDelegate next, ILogger logger)
+        public CustomExceptionMiddleware(RequestDelegate next)
         {
             _next = next;
-            _logger = logger;
+         
         }
 
         public async Task InvokeAsync(HttpContext context)

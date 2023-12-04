@@ -61,6 +61,11 @@
             Product yaradılması üçün
             </summary>
             <param name="model"></param>
+              /// <remarks>
+            <ul>
+             <li><b>Type:</b> 0 - Standart, 1 - Yeni, 2 - Satılmış, 3 - Satışda</li>
+            </ul>
+            </remarks>
         </member>
         <member name="M:Presentation.Controllers.ProductController.UpdateAsync(System.Int32,Business.DTOs.Product.Request.ProductUpdateDTO)">
             <summary>
@@ -68,6 +73,11 @@
             </summary>
             <param name="id"></param>
             <param name="model"></param>
+              /// <remarks>
+            <ul>
+             <li><b>Type:</b> 0 - Standart, 1 - Yeni, 2 - Satılmış, 3 - Satışda</li>
+            </ul>
+            </remarks>
         </member>
         <member name="M:Presentation.Controllers.ProductController.DeleteAsync(System.Int32)">
             <summary>

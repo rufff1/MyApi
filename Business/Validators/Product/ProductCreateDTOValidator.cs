@@ -31,6 +31,10 @@ namespace Business.Validators.Product
             RuleFor(x => x.CategoryId)
               .NotEmpty()
               .WithMessage("CategoryId daxil edilmelidir");
+
+            RuleFor(x => x.ProductType)
+             .IsInEnum()
+             .WithMessage("Tip düzgün seçilməyib");
         }
     }
 }

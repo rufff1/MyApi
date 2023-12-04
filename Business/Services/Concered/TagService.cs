@@ -35,7 +35,9 @@ namespace Business.Services.Concered
 
         public async Task<Response> CreateAsync(TagCreateDTO model)
         {
-            
+
+           
+       
                 var result = await new TagCreateDTOValidator().ValidateAsync(model);
                 if (!result.IsValid)
                 {
@@ -60,9 +62,7 @@ namespace Business.Services.Concered
                 {
                     Message = "tag ugurla yaradildi"
                 };
-            
-        
-
+       
 
 
         }

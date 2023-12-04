@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Common.Constants.Product;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,7 @@ namespace Business.DTOs.Product.Request
         public string Name { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
+        public ProductType ProductType { get; set; }
 
 
 

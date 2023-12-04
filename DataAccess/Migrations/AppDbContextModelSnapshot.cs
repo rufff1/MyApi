@@ -78,6 +78,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProductType")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -152,9 +155,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("varchar(max)")
                         .HasColumnName("email");
 
                     b.Property<string>("Image")

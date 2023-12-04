@@ -57,6 +57,11 @@ namespace Presentation.Controllers
         /// Product yaradılması üçün
         /// </summary>
         /// <param name="model"></param>
+        ///   /// <remarks>
+        /// <ul>
+        ///  <li><b>Type:</b> 0 - Standart, 1 - Yeni, 2 - Satılmış, 3 - Satışda</li>
+        /// </ul>
+        /// </remarks>
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
         #endregion
@@ -72,6 +77,11 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="model"></param>
+        ///   /// <remarks>
+        /// <ul>
+        ///  <li><b>Type:</b> 0 - Standart, 1 - Yeni, 2 - Satılmış, 3 - Satışda</li>
+        /// </ul>
+        /// </remarks>
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Response))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]

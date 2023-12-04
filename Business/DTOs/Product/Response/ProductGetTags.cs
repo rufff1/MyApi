@@ -1,5 +1,6 @@
 ﻿using Business.DTOs.Category.Response;
 using Business.DTOs.Tag.Response;
+using Common.Constants.Product;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,9 +19,10 @@ namespace Business.DTOs.Product.Response
         public string Description { get; set; }
         public string Image { get; set; }
 
+        public ProductType ProductType { get; set; }
 
-       
-        
+
+
         public List<TagResponseDTO> Tags { get; set; }
         public ProductFindCategoryDTO Category{ get; set; }
 
