@@ -15,5 +15,6 @@ namespace Business.DTOs.Team.Response
         public string Info { get; set; }
         public string Image { get; set; }
         public int PositionId { get; set; }
+        public string? Email { get; set; }
     }
 }

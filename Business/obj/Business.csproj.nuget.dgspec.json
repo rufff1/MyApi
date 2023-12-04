@@ -56,9 +56,17 @@
               "target": "Package",
               "version": "[12.0.1, )"
             },
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.102.1, )"
+            },
             "FluentValidation": {
               "target": "Package",
               "version": "[11.8.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             },
             "Microsoft.AspNet.WebApi.Core": {
               "target": "Package",
@@ -85,6 +93,18 @@
             "Microsoft.Extensions.Identity.Core": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Serilog.Sinks.File": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [
@@ -151,6 +171,10 @@
               "target": "Package",
               "version": "[12.0.1, )"
             },
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.102.1, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[7.0.14, )"
@@ -168,6 +192,18 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.14, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Serilog.Sinks.File": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [
@@ -238,6 +274,10 @@
               "target": "Package",
               "version": "[12.0.1, )"
             },
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.102.1, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[7.0.14, )"
@@ -259,6 +299,18 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.14, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Serilog.Sinks.File": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [

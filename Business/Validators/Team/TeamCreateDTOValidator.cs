@@ -1,4 +1,5 @@
 ﻿using Business.DTOs.Team.Request;
+using DataAccess.Migrations;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,14 @@ namespace Business.Validators.Team
             RuleFor(x => x.PositionId)
                 .NotEmpty()
                 .WithMessage("position daxil edilmelidir");
-                
+
+            RuleFor(x => x.Email)
+                 .NotEmpty()
+                 .WithMessage("email daxil edilmelidir")
+                 .EmailAddress()
+                 .WithMessage("tip email olmalidir")
+                 .MaximumLength(50)
+                 .WithMessage("max 50 xarakter ola biler");
 
 
 

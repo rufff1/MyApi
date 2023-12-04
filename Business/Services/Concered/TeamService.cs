@@ -14,6 +14,7 @@ using DataAccess.UnitOfWork;
 using FirstMyApi.Extensions;
 using FirstMyApi.Helpers;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services.Concered
 {
@@ -22,15 +23,16 @@ namespace Business.Services.Concered
         public readonly IMapper _mapper;
         private readonly ITeamRepository _teamRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly AppDbContext _context;
+       private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
-        public TeamService(IMapper mapper, ITeamRepository teamRepository ,IUnitOfWork unitOfWork,AppDbContext context,IWebHostEnvironment env )
+        public TeamService(IMapper mapper, ITeamRepository teamRepository ,IUnitOfWork unitOfWork,IWebHostEnvironment env,AppDbContext context )
         {
-            _context = context;
+           
             _mapper = mapper;
             _teamRepository = teamRepository;
             _unitOfWork = unitOfWork;
             _env = env;
+            _context = context;
         }
 
 
@@ -41,6 +43,14 @@ namespace Business.Services.Concered
             if (!result.IsValid) { throw new ValidationException(result.Errors); }
 
             var team = _mapper.Map<Team>(model);
+
+
+            bool teamEmail = await _context.Teams.AnyAsync(x => x.Email.ToLower().Trim() == model.Email.ToLower().Trim());
+
+            if (teamEmail)
+            {
+                throw new ValidationException("Bu email artig var");
+            }
 
 
             if (team.ImageFile == null)
@@ -64,7 +74,7 @@ namespace Business.Services.Concered
 
 
             team.Image = team.ImageFile.CreateImage(_env, "img", "team");
-
+            team.Email = team.Email.Trim();
             await _teamRepository.CreateAsync(team);
             await _unitOfWork.CommitAsync();
 
@@ -99,6 +109,11 @@ namespace Business.Services.Concered
         public async Task<Response<List<TeamResponseDTO>>> GetAllAsync()
         {
             var response = await _teamRepository.GetAllAsync();
+
+            if (response.Count() < 1)
+            {
+                throw new NotFoundException("team movcud deyil");
+            }
 
             return new Response<List<TeamResponseDTO>>
             {

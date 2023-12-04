@@ -14,6 +14,7 @@ namespace Business.DTOs.Team.Request
         public string Surname { get; set; }
         public byte Age { get; set; }
         public string Info { get; set; }
+        public string? Email { get; set; }
 
 
 

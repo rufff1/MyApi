@@ -7,10 +7,12 @@ namespace Presentation.Middlewares
     public class CustomExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger _logger;
 
-        public CustomExceptionMiddleware(RequestDelegate next)
+        public CustomExceptionMiddleware(RequestDelegate next, ILogger logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -36,15 +38,16 @@ namespace Presentation.Middlewares
                     context.Response.StatusCode = StatusCodes.Status400BadRequest;
                     response.Errors = e.Errors;
                     break;
+
                 case NotFoundException e:
                     context.Response.StatusCode = StatusCodes.Status404NotFound;
                     response.Errors = e.Errors;
                     break;
-                   
+           
                 default:
                     break;
             }
-
+       
             await context.Response.WriteAsync(JsonSerializer.Serialize(response));
         }
     }

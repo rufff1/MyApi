@@ -15,10 +15,12 @@ using System.Text;
 using Business.Services.Abstract;
 using Common.Entities;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.Filters;
-
-
+using Microsoft.AspNetCore.Hosting.Server;
+using System.Web.Http;
+using System.Net.Http.Formatting;
+using Microsoft.AspNetCore.Mvc;
+using Business.Helpers;
+using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,9 +29,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-
-
 builder.Services.AddControllers();
+
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -71,7 +75,6 @@ builder.Services.AddSwaggerGen(options =>
 
 
 
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -97,8 +100,6 @@ builder.Services.AddAuthentication(options =>
 
 
 
-
-
 builder.Services.Configure<RouteOptions>(x =>
 {
     x.LowercaseUrls = true;
@@ -116,6 +117,12 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.Password.RequiredUniqueChars = 0;
 })
     .AddEntityFrameworkStores<AppDbContext>();
+
+
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+
 
 #region Repositories
 
@@ -155,6 +162,7 @@ builder.Services.AddScoped<ITeamService, TeamService>();
 
 
 
+
 builder.Services.AddAutoMapper(x =>
 {
 x.AddProfile(new CategoryMappingProfile());
@@ -169,9 +177,12 @@ x.AddProfile(new TeamMappingProfile());
 
 
 
+Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
+    .WriteTo.File("C:\\Users\\ROG\\Desktop\\Loge\\ApiLog-.log",rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 
-
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
@@ -180,6 +191,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+ 
 }
 
 

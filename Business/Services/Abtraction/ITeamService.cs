@@ -17,5 +17,7 @@ namespace Business.Services.Abtraction
         Task<Response> CreateAsync(TeamCreateDTO model);
         Task<Response> UpdateAsync(TeamUpdateDTO model);
         Task<Response> DeleteAsync(int id);
+
+
     }
 }
