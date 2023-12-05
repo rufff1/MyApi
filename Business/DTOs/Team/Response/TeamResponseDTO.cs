@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Business.DTOs.Country.Response;
+using Common.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +15,16 @@ namespace Business.DTOs.Team.Response
         public string Surname { get; set; }
         public byte Age { get; set; }
         public string Info { get; set; }
+
+
+   
+
+
+
         public string Image { get; set; }
         public int PositionId { get; set; }
         public string? Email { get; set; }
+
+        public CountryResponseDTO Country { get; set; }
     }
 }

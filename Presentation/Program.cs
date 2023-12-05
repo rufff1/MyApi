@@ -131,8 +131,9 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ITeamPositionRepository, TeamPositionRepository>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
-
-
+builder.Services.AddScoped<ITestRepository ,TestRepository> ();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
+builder.Services.AddScoped<IBlogRepository,BlogRepository>();
 #endregion
 
 
@@ -155,8 +156,9 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ITeamPositionService, TeamPostionService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
-
-
+builder.Services.AddScoped<ITestService, TestService>();    
+builder.Services.AddScoped<ICountryService, CountryService>();
+builder.Services.AddScoped<IBlogService, BlogService>();
 #endregion
 
 
@@ -172,6 +174,9 @@ x.AddProfile(new ProductMappingProfile());
 x.AddProfile(new TagMappingProfile());
 x.AddProfile(new TeamPositionMappingProfile());
 x.AddProfile(new TeamMappingProfile());
+x.AddProfile(new TestMappingProfile());
+x.AddProfile(new CountryMappingProfile());
+x.AddProfile(new BlogMappingProfile());
 });
 
 

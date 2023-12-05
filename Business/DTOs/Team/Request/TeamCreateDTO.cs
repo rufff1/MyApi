@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Common.Constants;
+using Common.Constants.Country;
+using Common.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +18,12 @@ namespace Business.DTOs.Team.Request
         public byte Age { get; set; }
         public string Info { get; set; }
         public string? Email { get; set; }
+
+
+        public int CountryId { get; set; }
+
+
+
 
 
 

@@ -1,4 +1,5 @@
-﻿using Common.Entities;
+﻿using Common.Constants.Country;
+using Common.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,5 +23,10 @@ namespace DataAccess.Context
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TeamPosition> TeamPositions { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<Test> Tests { get; set; }
+         public DbSet<Country> Countries { get; set; }
+
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<BlogTag> BlogTags { get; set; }
     }
 }

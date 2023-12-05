@@ -1,6 +1,14 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\blog\\35b93036-f569-45ba-8b72-2cc8ae51a9e8_202312051602208410.jpg",
+      "PackagePath": "staticwebassets\\img\\blog\\35b93036-f569-45ba-8b72-2cc8ae51a9e8_202312051602208410.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\blog\\452c9344-6e22-42e5-82bc-30fade43b1f7_202312051604191866.jpg",
+      "PackagePath": "staticwebassets\\img\\blog\\452c9344-6e22-42e5-82bc-30fade43b1f7_202312051604191866.jpg"
+    },
+    {
       "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\category\\02e67bbe-48a5-4b96-9844-bd8392f84bc7_202311281616182809.jpg",
       "PackagePath": "staticwebassets\\img\\category\\02e67bbe-48a5-4b96-9844-bd8392f84bc7_202311281616182809.jpg"
     },
@@ -11,6 +19,10 @@
     {
       "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\category\\2ad139c8-1453-4c0b-b16f-ebfe24550196_202311301514362401.jpg",
       "PackagePath": "staticwebassets\\img\\category\\2ad139c8-1453-4c0b-b16f-ebfe24550196_202311301514362401.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\category\\3a41797e-bddd-4439-93ae-e6f7f28a9c9a_202312051601564715.jpg",
+      "PackagePath": "staticwebassets\\img\\category\\3a41797e-bddd-4439-93ae-e6f7f28a9c9a_202312051601564715.jpg"
     },
     {
       "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\category\\3dab6eb7-c761-464e-818a-ca3fa0ee534a_202311301238161542.jpg",
@@ -77,6 +89,10 @@
       "PackagePath": "staticwebassets\\img\\product\\699d51e7-b1d2-4921-a91a-8ff010002a40_202312041600091987.jpg"
     },
     {
+      "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\product\\7b5d6f83-5816-4167-bd6d-c0bada9cf1ac_202312041604593049.jpg",
+      "PackagePath": "staticwebassets\\img\\product\\7b5d6f83-5816-4167-bd6d-c0bada9cf1ac_202312041604593049.jpg"
+    },
+    {
       "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\product\\93155490-cd5e-48b1-b1a4-49394219a29f_202311281439351779.jpg",
       "PackagePath": "staticwebassets\\img\\product\\93155490-cd5e-48b1-b1a4-49394219a29f_202311281439351779.jpg"
     },
@@ -107,6 +123,10 @@
     {
       "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\team\\1cef236c-4a9b-4630-a91d-3cbec77115bd_202312011453585625.jpg",
       "PackagePath": "staticwebassets\\img\\team\\1cef236c-4a9b-4630-a91d-3cbec77115bd_202312011453585625.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\team\\2fdfb4e8-5ce9-4365-9a75-290338f552fc_202312051434391109.jpg",
+      "PackagePath": "staticwebassets\\img\\team\\2fdfb4e8-5ce9-4365-9a75-290338f552fc_202312051434391109.jpg"
     },
     {
       "Id": "C:\\Users\\ROG\\source\\repos\\Presentation\\Presentation\\wwwroot\\img\\team\\6f5f555c-7bf9-41d6-8e09-0095d02a30dd_202312011518323693.jpg",

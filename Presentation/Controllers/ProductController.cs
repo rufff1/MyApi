@@ -26,6 +26,11 @@ namespace Presentation.Controllers
         /// <summary>
         /// Product siyahısını götürmək üçün
         /// </summary>
+        /// <remarks>
+        /// <ul>
+        ///  <li><b>Type:</b> 0 - Standart, 1 - Yeni, 2 - Satılmış, 3 - Satışda</li>
+        /// </ul>
+        /// </remarks>
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<List<ProductGetTags>>))]
         #endregion
 
@@ -43,6 +48,11 @@ namespace Presentation.Controllers
         ///  Product id parametrinə görə götürülməsi üçün
         /// </summary>
         /// <param name="id"></param>
+        ///   /// <remarks>
+        /// <ul>
+        ///  <li><b>Type:</b> 0 - Standart, 1 - Yeni, 2 - Satılmış, 3 - Satışda</li>
+        /// </ul>
+        /// </remarks>
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<ProductResponseDTO>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Response))]
         #endregion

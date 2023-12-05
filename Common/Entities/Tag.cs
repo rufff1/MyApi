@@ -11,6 +11,7 @@ namespace Common.Entities
         public string Name {  get; set; }
 
         public List<ProductTag> ProductTags { get; set; }
+        public List<BlogTag> BlogTags { get; set; }
 
 
     }

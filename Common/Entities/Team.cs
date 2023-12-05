@@ -1,4 +1,6 @@
 ﻿using AutoMapper.Internal;
+using Common.Constants;
+using Common.Constants.Country;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,7 +19,9 @@ namespace Common.Entities
         public string Surname { get; set; }
         public byte Age {  get; set; }
         public string Info { get; set; }
+     
         public string Image {  get; set; }
+        
         [Column("email")]
         [Unicode(false)]
         public string? Email { get; set; }
@@ -27,7 +31,9 @@ namespace Common.Entities
         public virtual TeamPosition Position { get; set; }
 
 
-     
+        public int CountryId { get; set; }
+        public virtual Country Country { get; set; }
+
 
         [NotMapped]
         public IFormFile ImageFile { get; set; }

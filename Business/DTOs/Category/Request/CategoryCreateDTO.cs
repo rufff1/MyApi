@@ -15,11 +15,5 @@ namespace Business.DTOs.Product.Request
         [NotMapped]
         public IFormFile ImageFile { get; set; }
 
-
-
-
-
-
-
     }
 }

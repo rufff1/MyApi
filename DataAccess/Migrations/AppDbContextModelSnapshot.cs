@@ -22,6 +22,102 @@ namespace DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Common.Constants.Country.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("Common.Entities.Blog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("Common.Entities.BlogTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("BlogTags");
+                });
+
             modelBuilder.Entity("Common.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -151,6 +247,9 @@ namespace DataAccess.Migrations
                     b.Property<byte>("Age")
                         .HasColumnType("tinyint");
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -183,6 +282,8 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CountryId");
+
                     b.HasIndex("PositionId");
 
                     b.ToTable("Teams");
@@ -209,6 +310,33 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TeamPositions");
+                });
+
+            modelBuilder.Entity("Common.Entities.Test", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("Common.Entities.User", b =>
@@ -413,6 +541,43 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Common.Constants.Country.Country", b =>
+                {
+                    b.HasOne("Common.Constants.Country.Country", null)
+                        .WithMany("Countries")
+                        .HasForeignKey("CountryId");
+                });
+
+            modelBuilder.Entity("Common.Entities.Blog", b =>
+                {
+                    b.HasOne("Common.Entities.Category", "Category")
+                        .WithMany("Blogs")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Common.Entities.BlogTag", b =>
+                {
+                    b.HasOne("Common.Entities.Blog", "Blog")
+                        .WithMany("BlogTags")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Common.Entities.Tag", "Tag")
+                        .WithMany("BlogTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("Common.Entities.Product", b =>
                 {
                     b.HasOne("Common.Entities.Category", "Category")
@@ -445,11 +610,19 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Common.Entities.Team", b =>
                 {
+                    b.HasOne("Common.Constants.Country.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Common.Entities.TeamPosition", "Position")
                         .WithMany("Teams")
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Country");
 
                     b.Navigation("Position");
                 });
@@ -505,8 +678,20 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Common.Constants.Country.Country", b =>
+                {
+                    b.Navigation("Countries");
+                });
+
+            modelBuilder.Entity("Common.Entities.Blog", b =>
+                {
+                    b.Navigation("BlogTags");
+                });
+
             modelBuilder.Entity("Common.Entities.Category", b =>
                 {
+                    b.Navigation("Blogs");
+
                     b.Navigation("Products");
                 });
 
@@ -517,6 +702,8 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Common.Entities.Tag", b =>
                 {
+                    b.Navigation("BlogTags");
+
                     b.Navigation("ProductTags");
                 });
 

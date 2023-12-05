@@ -16,6 +16,56 @@
             </summary>
             <param name="model"></param>
         </member>
+        <member name="M:Presentation.Controllers.BlogController.GetAllAsync">
+            <summary>
+            blog siyahısını götürmək üçün
+            </summary>
+            <remarks>
+            <ul>
+             <li><b>Type:</b> 0 - Personal, 1 - Business, 2 - News, 3 - Professional</li>
+            </ul>
+            </remarks>
+        </member>
+        <member name="M:Presentation.Controllers.BlogController.GetAsync(System.Int32)">
+            <summary>
+             blog id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+              /// <remarks>
+            <ul>
+             <li><b>Type:</b> 0 - Personal, 1 - Business, 2 - News, 3 - Professional</li>
+            </ul>
+            </remarks>
+        </member>
+        <member name="M:Presentation.Controllers.BlogController.CreateAsync(Business.DTOs.Blog.Request.BlogCreateDTO)">
+            <summary>
+            blog yaradılması üçün
+            </summary>
+            <param name="model"></param>
+              /// <remarks>
+            <ul>
+             <li><b>Type:</b> 0 - Personal, 1 - Business, 2 - News, 3 - Professional</li>
+            </ul>
+            </remarks>
+        </member>
+        <member name="M:Presentation.Controllers.BlogController.UpdateAsync(System.Int32,Business.DTOs.Blog.Request.BlogUpdateDTO)">
+            <summary>
+            blog redaktə olunması üçün
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+              /// <remarks>
+            <ul>
+             <li><b>Type:</b> 0 - Personal, 1 - Business, 2 - News, 3 - Professional</li>
+            </ul>
+            </remarks>
+        </member>
+        <member name="M:Presentation.Controllers.BlogController.DeleteAsync(System.Int32)">
+            <summary>
+             blog silinməsi
+            </summary>
+            <param name="id"></param>
+        </member>
         <member name="M:Presentation.Controllers.CategoryController.GetAllAsync">
             <summary>
             Category siyahısını götürmək üçün
@@ -45,16 +95,56 @@
             </summary>
             <param name="id"></param>
         </member>
+        <member name="M:Presentation.Controllers.CountryController.GetAsync(System.Int32)">
+            <summary>
+             Country id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CountryController.GetAllAsync">
+            <summary>
+            Country siyahısını götürmək üçün
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.CountryController.UpdateAyns(Business.DTOs.Country.Request.CountryUpdateDTO)">
+            <summary>
+            Country redaktə olunması üçün
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CountryController.DeleteAsync(System.Int32)">
+            <summary>
+             Country silinməsi
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CountryController.CreateAsync(Business.DTOs.Country.Request.CountryCreateDTO)">
+            <summary>
+            Country yaradılması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
         <member name="M:Presentation.Controllers.ProductController.GetAllAsync">
             <summary>
             Product siyahısını götürmək üçün
             </summary>
+            <remarks>
+            <ul>
+             <li><b>Type:</b> 0 - Standart, 1 - Yeni, 2 - Satılmış, 3 - Satışda</li>
+            </ul>
+            </remarks>
         </member>
         <member name="M:Presentation.Controllers.ProductController.GetAsync(System.Int32)">
             <summary>
              Product id parametrinə görə götürülməsi üçün
             </summary>
             <param name="id"></param>
+              /// <remarks>
+            <ul>
+             <li><b>Type:</b> 0 - Standart, 1 - Yeni, 2 - Satılmış, 3 - Satışda</li>
+            </ul>
+            </remarks>
         </member>
         <member name="M:Presentation.Controllers.ProductController.CreateAsync(Business.DTOs.Product.Request.ProductCreateDTO)">
             <summary>
@@ -184,6 +274,12 @@
              position silinməsi
             </summary>
             <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TestController.CreateAsync(Business.DTOs.Test.TestCreateDTO)">
+            <summary>
+            test yaradılması üçün
+            </summary>
+            <param name="model"></param>
         </member>
     </members>
 </doc>

@@ -60,7 +60,10 @@ namespace Business.Services.Concered
             var category = _mapper.Map<Category>(model);
 
 
+          
 
+
+        
 
             bool categoryName = await _context.Categories.AnyAsync(x => x.Name.ToLower().Trim() == model.Name.ToLower().Trim());
 

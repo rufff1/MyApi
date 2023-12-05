@@ -12,11 +12,11 @@ namespace Business.MappingProfiles
 {
     public class TeamMappingProfile : Profile
     {
-        public TeamMappingProfile()
+        public TeamMappingProfile() :base()
         {
             CreateMap<TeamCreateDTO , Team>().ReverseMap();
             CreateMap<TeamUpdateDTO , Team>().ReverseMap();
-            CreateMap<Team , TeamResponseDTO>().ReverseMap();
+            CreateMap<Team , TeamResponseDTO>().ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Country)).ReverseMap();
         }
     }
 }

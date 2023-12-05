@@ -19,10 +19,13 @@ namespace Common.Entities
         public string Image {  get; set; }
 
 
-       public List<Product> Products { get; set; }  
+       public List<Product> Products { get; set; }
+        public List<Blog> Blogs { get; set; }
 
         [NotMapped]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile ImageFile { get;set; }    
+
+      
 
     }
 }

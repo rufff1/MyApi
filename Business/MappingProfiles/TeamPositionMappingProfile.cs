@@ -12,7 +12,7 @@ namespace Business.MappingProfiles
 {
     public class TeamPositionMappingProfile :Profile
     {
-        public TeamPositionMappingProfile()
+        public TeamPositionMappingProfile() :base() 
         {
                 CreateMap<TeamPositionCreateDTO , TeamPosition>().ReverseMap();
                 CreateMap<TeamPositionUpdateDTO , TeamPosition>().ReverseMap();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Common.Constants;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,9 @@ namespace Business.DTOs.Team.Request
         public string Info { get; set; }
         public string? Email { get; set; }
 
+
+
+        public int CountryId { get; set; }
 
 
 

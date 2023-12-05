@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231201081617_email")]
-    partial class email
+    [Migration("20231205093741_update")]
+    partial class update
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,34 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Common.Constants.Country.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Countries");
+                });
 
             modelBuilder.Entity("Common.Entities.Category", b =>
                 {
@@ -80,6 +108,9 @@ namespace DataAccess.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductType")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -151,13 +182,15 @@ namespace DataAccess.Migrations
                     b.Property<byte>("Age")
                         .HasColumnType("tinyint");
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("varchar(max)")
                         .HasColumnName("email");
 
                     b.Property<string>("Image")
@@ -183,6 +216,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("PositionId");
 
@@ -210,6 +245,33 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TeamPositions");
+                });
+
+            modelBuilder.Entity("Common.Entities.Test", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("Common.Entities.User", b =>
@@ -414,6 +476,13 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Common.Constants.Country.Country", b =>
+                {
+                    b.HasOne("Common.Constants.Country.Country", null)
+                        .WithMany("Countries")
+                        .HasForeignKey("CountryId");
+                });
+
             modelBuilder.Entity("Common.Entities.Product", b =>
                 {
                     b.HasOne("Common.Entities.Category", "Category")
@@ -446,11 +515,19 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Common.Entities.Team", b =>
                 {
+                    b.HasOne("Common.Constants.Country.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Common.Entities.TeamPosition", "Position")
                         .WithMany("Teams")
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Country");
 
                     b.Navigation("Position");
                 });
@@ -504,6 +581,11 @@ namespace DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Common.Constants.Country.Country", b =>
+                {
+                    b.Navigation("Countries");
                 });
 
             modelBuilder.Entity("Common.Entities.Category", b =>

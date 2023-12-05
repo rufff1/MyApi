@@ -19,6 +19,7 @@ namespace Common.Entities
      
         public string Image { get; set; }
         
+        public ProductType ProductType { get; set; }
 
        public Category Category { get; set; }
         
@@ -26,7 +27,6 @@ namespace Common.Entities
 
         public List<ProductTag> ProductTags { get; set; }
 
-        public ProductType ProductType { get; set; }
 
 
         [NotMapped]

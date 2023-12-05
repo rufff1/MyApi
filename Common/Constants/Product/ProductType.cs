@@ -8,7 +8,7 @@ namespace Common.Constants.Product
 {
     public enum ProductType
     {
-        Standart = 1,
+        Standart,
         New,
         Sold,
         Sale

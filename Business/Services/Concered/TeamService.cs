@@ -15,6 +15,7 @@ using FirstMyApi.Extensions;
 using FirstMyApi.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Common.Constants;
 
 namespace Business.Services.Concered
 {
@@ -108,12 +109,13 @@ namespace Business.Services.Concered
 
         public async Task<Response<List<TeamResponseDTO>>> GetAllAsync()
         {
-            var response = await _teamRepository.GetAllAsync();
+            var response = await _context.Teams.Include(x=> x.Country).ToListAsync();
 
             if (response.Count() < 1)
             {
                 throw new NotFoundException("team movcud deyil");
             }
+
 
             return new Response<List<TeamResponseDTO>>
             {
@@ -126,6 +128,8 @@ namespace Business.Services.Concered
         {
             var response = await _teamRepository.GetAsync(id);
             if (response == null) throw new NotFoundException("team tapilmadi");
+
+           
 
             return new Response<TeamResponseDTO>
             {
