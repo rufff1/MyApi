@@ -21,7 +21,25 @@ using System.Net.Http.Formatting;
 using Microsoft.AspNetCore.Mvc;
 using Business.Helpers;
 using Serilog;
+using Serilog.Events;
+using Serilog.Core;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+
+
+
+Logger log = new LoggerConfiguration()
+      .WriteTo.Seq("http://localhost:5341")
+      .WriteTo.File("C:\\Users\\ROG\\Desktop\\Loge\\ApiLog-.log", rollingInterval: RollingInterval.Day)
+      .Enrich.FromLogContext()
+      .MinimumLevel.Information()
+      .CreateLogger();
+
+builder.Host.UseSerilog(log);
+
 
 // Add services to the container.
 
@@ -182,12 +200,7 @@ x.AddProfile(new BlogMappingProfile());
 
 
 
-Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
-    .WriteTo.File("C:\\Users\\ROG\\Desktop\\Loge\\ApiLog-.log",rollingInterval: RollingInterval.Day)
-    .CreateLogger();
 
-
-builder.Host.UseSerilog();
 
 var app = builder.Build();
 

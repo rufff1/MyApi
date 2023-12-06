@@ -30,7 +30,7 @@ namespace Common.Entities
 
 
         [NotMapped]
-        [MaxLength(3)]
+        [MaxLength(3,ErrorMessage = "maximum 3 tag secilmelidir")]
         public ICollection<int> TagIds { get; set; } 
 
 

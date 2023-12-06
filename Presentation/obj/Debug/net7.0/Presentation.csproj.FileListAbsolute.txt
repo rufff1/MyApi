@@ -126,3 +126,5 @@ C:\Users\ROG\source\repos\Presentation\Presentation\bin\Debug\net7.0\Serilog.Set
 C:\Users\ROG\source\repos\Presentation\Presentation\bin\Debug\net7.0\Serilog.Sinks.Console.dll
 C:\Users\ROG\source\repos\Presentation\Presentation\bin\Debug\net7.0\Serilog.Sinks.Debug.dll
 C:\Users\ROG\source\repos\Presentation\Presentation\bin\Debug\net7.0\Serilog.Sinks.File.dll
+C:\Users\ROG\source\repos\Presentation\Presentation\bin\Debug\net7.0\Serilog.Sinks.PeriodicBatching.dll
+C:\Users\ROG\source\repos\Presentation\Presentation\bin\Debug\net7.0\Serilog.Sinks.Seq.dll

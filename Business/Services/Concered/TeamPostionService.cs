@@ -12,7 +12,7 @@ using DataAccess.Context;
 using DataAccess.Repositories.Abstract;
 using DataAccess.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Logging;
 
 namespace Business.Services.Concered
 {
@@ -22,14 +22,15 @@ namespace Business.Services.Concered
         public readonly ITeamPositionRepository _teamPositionRepository;
         public readonly IUnitOfWork _unitOfWork;
         public readonly AppDbContext _context;
+        private readonly ILogger<TeamPostionService> _logger;
 
-
-        public TeamPostionService(IMapper mapper, ITeamPositionRepository teamPositionRepository, IUnitOfWork unitOfWork, AppDbContext context)
+        public TeamPostionService(IMapper mapper, ITeamPositionRepository teamPositionRepository, IUnitOfWork unitOfWork, AppDbContext context,ILogger<TeamPostionService> logger)
         {
             _mapper = mapper;
             _teamPositionRepository = teamPositionRepository;
             _unitOfWork = unitOfWork;
             _context = context;
+            _logger = logger;
 
         }
         public async Task<Response> CreateAsync(TeamPositionCreateDTO model)
@@ -38,6 +39,7 @@ namespace Business.Services.Concered
 
             if (!result.IsValid)
             {
+                _logger.LogError("model validator error");
                 throw new ValidationException(result.Errors);
             }
 
@@ -47,6 +49,8 @@ namespace Business.Services.Concered
 
             if (isExist)
             {
+                _logger.LogError("Bu position name artig var");
+
                 throw new ValidationException("Bu position name artig var");
             }
 
@@ -67,7 +71,7 @@ namespace Business.Services.Concered
 
             var position  = await _teamPositionRepository.GetAsync(id);
 
-            if (position == null) throw new ValidationException("position tapilmadi");
+            if (position == null) { _logger.LogError("position tapilmadi"); throw new ValidationException("position tapilmadi"); }
 
              _teamPositionRepository.Delete(position);
             await _unitOfWork.CommitAsync();
@@ -93,7 +97,7 @@ namespace Business.Services.Concered
         public async Task<Response<TeamPositionReponseDTO>> GetAsync(int id)
         {
             var response = await _teamPositionRepository.GetAsync(id);
-            if (response == null) throw new ValidationException("position tapilmadi");
+            if (response == null) { _logger.LogError("position tapilmadi"); throw new ValidationException("position tapilmadi"); }
 
             return new Response<TeamPositionReponseDTO>
             {
@@ -108,6 +112,8 @@ namespace Business.Services.Concered
 
             if (!result.IsValid)
             {
+                _logger.LogError("model validator error");
+
                 throw new ValidationException(result.Errors);
             }
 
@@ -115,6 +121,8 @@ namespace Business.Services.Concered
 
             if (teamPosition == null)
             {
+                _logger.LogError("position tapilmadi");
+
                 throw new NotFoundException("position tapilmadi");
             }
 
@@ -123,6 +131,7 @@ namespace Business.Services.Concered
             bool isExist = await _context.TeamPositions.AnyAsync(c => c.PositionName.ToLower() == teamPosition.PositionName.ToLower().Trim());
             if (isExist)
             {
+                _logger.LogError("Bu adla position var");
                 throw new ValidationException("Bu adla position var");
             };
 

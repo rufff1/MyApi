@@ -16,6 +16,7 @@ using FirstMyApi.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Common.Constants;
+using Microsoft.Extensions.Logging;
 
 namespace Business.Services.Concered
 {
@@ -26,7 +27,8 @@ namespace Business.Services.Concered
         private readonly IUnitOfWork _unitOfWork;
        private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
-        public TeamService(IMapper mapper, ITeamRepository teamRepository ,IUnitOfWork unitOfWork,IWebHostEnvironment env,AppDbContext context )
+        private readonly ILogger<TeamService> _logger;
+        public TeamService(IMapper mapper, ITeamRepository teamRepository ,IUnitOfWork unitOfWork,IWebHostEnvironment env,AppDbContext context, ILogger<TeamService> logger )
         {
            
             _mapper = mapper;
@@ -34,6 +36,7 @@ namespace Business.Services.Concered
             _unitOfWork = unitOfWork;
             _env = env;
             _context = context;
+            _logger = logger;
         }
 
 
@@ -41,7 +44,7 @@ namespace Business.Services.Concered
         {
             var result = await new TeamCreateDTOValidator().ValidateAsync(model);
 
-            if (!result.IsValid) { throw new ValidationException(result.Errors); }
+            if (!result.IsValid) {_logger.LogError("model validator error"); throw new ValidationException(result.Errors); }
 
             var team = _mapper.Map<Team>(model);
 
@@ -50,12 +53,14 @@ namespace Business.Services.Concered
 
             if (teamEmail)
             {
+                _logger.LogError("Bu email artig var");
                 throw new ValidationException("Bu email artig var");
             }
 
 
             if (team.ImageFile == null)
             {
+                _logger.LogError("Image daxil edilmelidir");
                 throw new ValidationException("Image daxil edilmelidir");
             }
 
@@ -63,11 +68,13 @@ namespace Business.Services.Concered
 
             if (!team.ImageFile.CheckFileSize(1000))
             {
+                _logger.LogError("Image olcusu max 1 mb olamlidir");
                 throw new ValidationException("Image olcusu max 1 mb olamlidir");
 
             }
             if (!team.ImageFile.CheckFileType("image/jpeg"))
             {
+                _logger.LogError("Image jpg tipi olmalidir");
 
                 throw new ValidationException("Image jpg tipi olmalidir");
 
@@ -95,6 +102,7 @@ namespace Business.Services.Concered
 
             if (team == null)
             {
+                _logger.LogError("team tapilmadi");
                 throw new ValidationException("team tapilmadi");
             }
 
@@ -113,6 +121,7 @@ namespace Business.Services.Concered
 
             if (response.Count() < 1)
             {
+            
                 throw new NotFoundException("team movcud deyil");
             }
 
@@ -143,12 +152,13 @@ namespace Business.Services.Concered
         {
             var result = await new TeamUpdateDTOValidator().ValidateAsync(model);
            
-                if (!result.IsValid) { throw new ValidationException(result.Errors); }
+                if (!result.IsValid) {_logger.LogError("model validator error"); throw new ValidationException(result.Errors); }
 
             var existedteam = await _teamRepository.GetAsync(model.Id);
 
             if (existedteam == null)
             {
+                _logger.LogError("team tapilmadi");
                 throw new NotFoundException("team tapilmadi");
             }
             _mapper.Map(model, existedteam);
@@ -156,6 +166,7 @@ namespace Business.Services.Concered
 
             if (existedteam.ImageFile == null)
                 {
+                _logger.LogError("Image daxil edilmelidir");
                     throw new ValidationException("Image daxil edilmelidir");
                 }
             
@@ -166,11 +177,13 @@ namespace Business.Services.Concered
 
             if (!existedteam.ImageFile.CheckFileSize(1000))
             {
+                _logger.LogError("Image olcusu max 1 mb olamlidir");
                 throw new ValidationException("Image olcusu max 1 mb olamlidir");
 
             }
             if (!existedteam.ImageFile.CheckFileType("image/jpeg"))
             {
+                _logger.LogError("Image jpg tipi olmalidir");
 
                 throw new ValidationException("Image jpg tipi olmalidir");
 

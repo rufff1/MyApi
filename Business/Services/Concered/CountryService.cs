@@ -12,6 +12,7 @@ using DataAccess.Repositories.Concrete;
 using DataAccess.UnitOfWork;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,13 +27,14 @@ namespace Business.Services.Concered
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly AppDbContext _context;
-
-        public CountryService(ICountryRepository countryRepository,IMapper mapper,IUnitOfWork unitOfWork,AppDbContext context)
+        private readonly ILogger<CountryService> _logger;   
+        public CountryService(ICountryRepository countryRepository,IMapper mapper,IUnitOfWork unitOfWork,AppDbContext context,ILogger<CountryService > logger)
         {
             _countryRepository = countryRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;  
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Response> CreateAsync(CountryCreateDTO model)
@@ -41,6 +43,7 @@ namespace Business.Services.Concered
 
             if (!result.IsValid)
             {
+                _logger.LogError("model validator error");
                 throw new ValidationException(result.Errors);
             }
 
@@ -52,6 +55,7 @@ namespace Business.Services.Concered
 
             if (countryName)
             {
+                _logger.LogError("bu country adi artig movcuddur");
                 throw new ValidationException("bu country adi artig movcuddur");
             }
 
@@ -71,7 +75,11 @@ namespace Business.Services.Concered
             var country = await _countryRepository.GetAsync(id);
 
             if (country == null)
+            {
+                _logger.LogError("model validator error");
+
                 throw new NotFoundException("country tapilmadi");
+            }
 
              _countryRepository.Delete(country);
             await _unitOfWork.CommitAsync();
@@ -90,6 +98,7 @@ namespace Business.Services.Concered
 
             if (response == null)
             {
+                _logger.LogError("country tapilmadi");
                 throw new NotFoundException("country tapilmadi");
             }
 
@@ -106,6 +115,7 @@ namespace Business.Services.Concered
             var response = await _countryRepository.GetAsync(id);
             if (response == null)
             {
+                _logger.LogError("country tapilmadi");
                 throw new NotFoundException("country tapilmadi");
             }
 
@@ -123,6 +133,8 @@ namespace Business.Services.Concered
             var result = await new CountryDTOUpdateValidator().ValidateAsync(model);
             if (!result.IsValid)
             {
+                _logger.LogWarning("model validator error");
+               
                 throw new ValidationException(result.Errors);
             }
 
@@ -130,6 +142,7 @@ namespace Business.Services.Concered
 
             if (existCountry == null)
             {
+                _logger.LogError("country tapilmadi");
                 throw new NotFoundException("country tapilmadi");
             }
 
@@ -138,6 +151,7 @@ namespace Business.Services.Concered
             bool isExist = await _context.Countries.AnyAsync(c => c.CountryName.ToLower() == model.CountryName.ToLower().Trim());
             if (isExist)
             {
+                _logger.LogError("Bu adla country var");
                 throw new ValidationException("Bu adla country var");
             };
 

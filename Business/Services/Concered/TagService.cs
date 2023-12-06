@@ -28,7 +28,7 @@ namespace Business.Services.Concered
         {
             _mapper = mapper;
             _tagRepository = tagRepository;
-                _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
             _context = context;
             _logger = logger;
         }
@@ -41,6 +41,8 @@ namespace Business.Services.Concered
                 var result = await new TagCreateDTOValidator().ValidateAsync(model);
                 if (!result.IsValid)
                 {
+                    _logger.LogWarning("model validator exception");
+
                     throw new ValidationException(result.Errors);
                 }
 
@@ -51,10 +53,12 @@ namespace Business.Services.Concered
 
                 if (tagName)
                 {
+                    _logger.LogError("bu tag name movcuddur");
                     throw new ValidationException("bu tag name movcuddur");
+
                 }
 
-                await _tagRepository.CreateAsync(tag);
+            await _tagRepository.CreateAsync(tag);
                 await _unitOfWork.CommitAsync();
 
 
@@ -73,8 +77,8 @@ namespace Business.Services.Concered
 
             if (tag == null)
             {
+                _logger.LogError("id duzgun qeyd edin");
                 throw new NotFoundException("tag tapilmadi");
-
             }
 
              _tagRepository.Delete(tag);
@@ -84,14 +88,13 @@ namespace Business.Services.Concered
 
             return new Response
             {
-                Message= "tagb ugurla silindi"
+                Message= "tag ugurla silindi"
             };
         }
 
         public async Task<Response<List<TagResponseDTO>>> GetAllAsync()
         {
-            try
-            {
+            
                 var response = await _tagRepository.GetAllAsync();
 
 
@@ -100,44 +103,32 @@ namespace Business.Services.Concered
                     Data = _mapper.Map<List<TagResponseDTO>>(response),
                     Message = "Butun Taglar getirildi"
 
-
                 };
 
-            }
-            catch (Exception ex)
-            {
-
-                 _logger.LogError(ex.Message);
-            }
-
-            return null;
+    
         }
 
         public async Task<Response<TagResponseDTO>> GetAsync(int id)
         {
+          
 
-            try
-            {
                 var response = await _tagRepository.GetAsync(id);
+
                 if (response == null)
                 {
+                    _logger.LogWarning("id duzgun qeyd edin");
                     throw new NotFoundException("Tag Tapilmadi");
 
-                }
+            }
 
                 return new Response<TagResponseDTO>
                 {
                     Data = _mapper.Map<TagResponseDTO>(response),
                     Message = "Tag tapildi"
                 };
-            }
-            catch (Exception ex)
-            {
+            
+        
 
-                _logger.LogError(ex.Message);
-            }
-
-            return null;
           
           
         }
@@ -148,6 +139,8 @@ namespace Business.Services.Concered
 
             if (!result.IsValid)
             {
+                _logger.LogWarning("model validator error");
+
                 throw new ValidationException(result.Errors);
             }
 
@@ -156,7 +149,11 @@ namespace Business.Services.Concered
 
 
             if (tag == null)
+            {
+                _logger.LogError("id duzgun qeyd edin");
+
                 throw new NotFoundException("tag tapilmadi");
+            }
 
 
               _mapper.Map(model, tag);
@@ -167,6 +164,8 @@ namespace Business.Services.Concered
             bool isExist =await _context.Tags.AnyAsync(c => c.Name.ToLower() == tag.Name.ToLower().Trim());
             if (isExist)
             {
+                _logger.LogWarning("Bu adla tag var");
+
                 throw new ValidationException("Bu adla tag var");
             };
 

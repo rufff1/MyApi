@@ -35,6 +35,9 @@ namespace Business.Validators.Product
             RuleFor(x => x.ProductType)
              .IsInEnum()
              .WithMessage("Tip düzgün seçilməyib");
+
+        
+
         }
     }
 }

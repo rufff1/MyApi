@@ -14,6 +14,7 @@ using FirstMyApi.Extensions;
 using FirstMyApi.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Reflection.Metadata;
 using System.Web.Http.ModelBinding;
 
@@ -25,14 +26,15 @@ namespace Business.Services.Concered
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
-       
+       private readonly ILogger<ProductService> _logger;
 
         private readonly IWebHostEnvironment _env;
         public ProductService(IProductRepository productRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IWebHostEnvironment env,
-            AppDbContext context
+            AppDbContext context,
+            ILogger<ProductService> logger
         
            )
         {
@@ -40,6 +42,7 @@ namespace Business.Services.Concered
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _env = env;
+            _logger = logger;
             _context = context;
            
         }
@@ -49,6 +52,8 @@ namespace Business.Services.Concered
             var result = await new ProductCreateDTOValidator().ValidateAsync(model);
             if (!result.IsValid)
             {
+                _logger.LogWarning("model validator error");
+               
                 throw new ValidationException(result.Errors);
             }
             var product = _mapper.Map<Product>(model);
@@ -59,15 +64,19 @@ namespace Business.Services.Concered
 
             foreach (int tagId in product.TagIds)
             {
+                
                 if (product.TagIds.Where(t => t == tagId).Count() > 1)
                 {
+                      _logger.LogWarning("Bir tagdan bir defe secilmelidir");
+
                     throw new ValidationException("Bir tagdan bir defe secilmelidir");
 
                 }
 
                 if (!await _context.Tags.AnyAsync(t => t.Id == tagId))
                 {
-                 
+
+                    _logger.LogError("secilen tag yalnisdir");
 
                     throw new ValidationException("secilen tag yalnisdir");
                 }
@@ -85,13 +94,17 @@ namespace Business.Services.Concered
                 productTags.Add(productTag);
             }
 
+       
+
             if (!await _context.Categories.AnyAsync(c =>  c.Id == product.CategoryId))
             {
+                _logger.LogError("gelen category yalnisdir");
                 throw new ValidationException("gelen category yalnisdir");
             }
 
             if (product.ImageFile == null)
             {
+                _logger.LogError("Image daxil edilemlidir");
                 
 
                 throw new ValidationException("Image daxil edilmelidir");
@@ -101,12 +114,14 @@ namespace Business.Services.Concered
 
             if (!product.ImageFile.CheckFileSize(1000))
             {
+                _logger.LogError("Image olcusu 1 mb cox olmamalidir");
                 throw new ValidationException("Image olcusu 1 mb cox olmamalidir");
             }
             
 
             if (!product.ImageFile.CheckFileType("image/jpeg"))
             {
+                _logger.LogError("Image jpg tipi olmalidir");
                
                 throw new ValidationException("Image jpg tipi olmalidir");
 
@@ -138,7 +153,11 @@ namespace Business.Services.Concered
         {
             var product = await _productRepository.GetAsync(id);
             if (product is null)
+            {
+                _logger.LogError("Mehsul tapilmadi");
+
                 throw new NotFoundException("Mehsul tapilmadi");
+            }
 
             _productRepository.Delete(product);
             await _unitOfWork.CommitAsync();
@@ -157,6 +176,7 @@ namespace Business.Services.Concered
 
             if (productWithCategory is null)
             {
+                _logger.LogError("product tapilmadi");
                 throw new NotFoundException("product tapilmadi");
             }
 
@@ -178,12 +198,16 @@ namespace Business.Services.Concered
            
 
             if (products is null)
+            {
+                _logger.LogError("product yoxdur");
+
+
                 throw new NotFoundException("product yoxdur");
+            }
 
 
            
-            try
-            {
+          
                 return new Response<List<ProductGetTags>>
                 {
 
@@ -191,14 +215,8 @@ namespace Business.Services.Concered
 
                     Message = "All products retrieved successfully."
                 };
-            }
-            catch (Exception e)
-            {
-                throw e.InnerException;
-
-            }
-
-            return null;
+            
+         
          
 
 
@@ -208,13 +226,21 @@ namespace Business.Services.Concered
         {
             var result =await new ProductUpdateDTOValidator().ValidateAsync(model);
             if (!result.IsValid)
+            {
+                _logger.LogError("model validator error");
+
                 throw new ValidationException(result.Errors);
+            }
 
             var existProduct = await _context.Products
               .Include(p => p.ProductTags).ThenInclude(pt => pt.Tag)
               .FirstOrDefaultAsync(x=> x.Id == id);
             if (existProduct is null)
+            {
+                _logger.LogError("Product tapılmadı");
+
                 throw new NotFoundException("Product tapılmadı");
+            }
 
          
 
@@ -236,12 +262,15 @@ namespace Business.Services.Concered
             {
                 if (existProduct.TagIds.Where(t => t == tagId).Count() > 1)
                 {
+                    _logger.LogError("Bir tagdan bir defe secilmelidir");
                     throw new ValidationException("Bir tagdan bir defe secilmelidir");
 
                 }
 
                 if (!await _context.Tags.AnyAsync(t => t.Id == tagId))
                 {
+                    _logger.LogError("secilen tag yalnisdir");
+
                     throw new ValidationException("secilen tag yalnisdir");
 
                 }
@@ -262,6 +291,7 @@ namespace Business.Services.Concered
 
             if (existProduct.ImageFile == null)
             {
+                _logger.LogError("Image daxil edilmelidir");
 
 
                 throw new ValidationException("Image daxil edilmelidir");
@@ -271,13 +301,14 @@ namespace Business.Services.Concered
 
             if (!existProduct.ImageFile.CheckFileSize(1000))
             {
+                _logger.LogError("Image olcusu 1 mb cox olmamalidir");
                 throw new ValidationException("Image olcusu 1 mb cox olmamalidir");
             }
 
 
             if (!existProduct.ImageFile.CheckFileType("image/jpeg"))
             {
-
+                _logger.LogError("Image jpg tipi olmalidir");
                 throw new ValidationException("Image jpg tipi olmalidir");
 
             }
@@ -291,16 +322,11 @@ namespace Business.Services.Concered
             existProduct.CategoryId = existProduct.CategoryId;
             existProduct.Name = existProduct.Name;
             existProduct.Description = existProduct.Description;
-            try
-            {
-
+           
                 _productRepository.Update(existProduct);
                 await _unitOfWork.CommitAsync();
-            }
-            catch(Exception ex)
-            {
-                int a = 32;
-            }
+            
+          
 
             return new Response
             {

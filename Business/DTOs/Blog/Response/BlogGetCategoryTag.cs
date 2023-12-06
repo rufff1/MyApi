@@ -1,5 +1,6 @@
 ﻿using Business.DTOs.Category.Response;
 using Business.DTOs.Tag.Response;
+using Common.Constants.Blog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Business.DTOs.Blog.Response
         public string Image { get; set; }
 
 
-
+        public BlogType BlogType { get; set; }
         public List<TagResponseDTO> Tags { get; set; }
         public ProductFindCategoryDTO Category { get; set; }
 

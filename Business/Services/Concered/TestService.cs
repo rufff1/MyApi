@@ -7,6 +7,7 @@ using DataAccess.Repositories.Abstract;
 using DataAccess.Repositories.Concrete;
 using DataAccess.UnitOfWork;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,13 @@ namespace Business.Services.Concered
         public readonly IMapper _mapper;
         public readonly ITestRepository _testRepository;
         public readonly IUnitOfWork _unitOfWork;
-
-        public TestService(IMapper mapper,ITestRepository testRepository, IUnitOfWork unitOfWork)
+        private readonly ILogger<TestService> _logger;
+        public TestService(ILogger<TestService> logger, IMapper mapper,ITestRepository testRepository, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _testRepository = testRepository;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
     
@@ -49,6 +51,7 @@ namespace Business.Services.Concered
           
             await _unitOfWork.CommitAsync();
 
+            _logger.LogInformation("update oldu test");
             return new Response()
             {
                 Message = "ugurla yaradildi"

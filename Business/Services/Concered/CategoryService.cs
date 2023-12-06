@@ -17,6 +17,7 @@ using FirstMyApi.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Numerics;
 using System.Web.Http.ModelBinding;
@@ -29,7 +30,7 @@ namespace Business.Services.Concered
         private readonly AppDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        
+        private readonly ILogger<CategoryService> _logger;
         
 
         private readonly IWebHostEnvironment _env;
@@ -37,8 +38,9 @@ namespace Business.Services.Concered
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IWebHostEnvironment env,
-            AppDbContext context
-            
+            AppDbContext context,
+            ILogger<CategoryService> logger
+
            )
         {
             _categoryRepository = categoryRepository;
@@ -46,6 +48,7 @@ namespace Business.Services.Concered
             _mapper = mapper;
             _env = env;
             _context = context;
+            _logger = logger;
          
         }
 
@@ -54,6 +57,7 @@ namespace Business.Services.Concered
             var result = await new CategoryCreateDTOValidator().ValidateAsync(model);
             if (!result.IsValid)
             {
+                _logger.LogError("model validator error");
                 throw new ValidationException(result.Errors);
             }
 
@@ -65,27 +69,33 @@ namespace Business.Services.Concered
 
         
 
-            bool categoryName = await _context.Categories.AnyAsync(x => x.Name.ToLower().Trim() == model.Name.ToLower().Trim());
+            bool categoryName = await _context.Categories.AnyAsync(x => x.Name.ToLower().Trim() == category.Name.ToLower().Trim());
 
             if (categoryName)
             {
+                _logger.LogWarning("Bu adla category var");
                 throw new ValidationException("Bu adla category var");
             }
 
             if (category.ImageFile == null)
             {
-               throw new ValidationException("Image daxil edilmelidir");
+                
+                    _logger.LogWarning("Image daxil edilmelidir");
+
+                    throw new ValidationException("Image daxil edilmelidir");
             }
 
 
 
             if (!category.ImageFile.CheckFileSize(1000))
             {
+                _logger.LogWarning("Image olcusu max 1 mb olamlidir");
                 throw new ValidationException("Image olcusu max 1 mb olamlidir");
 
             }
             if (!category.ImageFile.CheckFileType("image/jpeg"))
             {
+                _logger.LogWarning("Image jpg tipi olmalidir");
                
                 throw new ValidationException("Image jpg tipi olmalidir");
 
@@ -117,7 +127,10 @@ namespace Business.Services.Concered
             var category = await _categoryRepository.GetAsync(id);
 
             if(category is null)
-                throw new NotFoundException("Mehsul tapilmadi");
+            {
+                _logger.LogError("category tapilmadi\"");
+                throw new NotFoundException("category tapilmadi");
+            }
 
                _categoryRepository.Delete(category);
                await _unitOfWork.CommitAsync();
@@ -134,7 +147,10 @@ namespace Business.Services.Concered
 
             var categoryWithPro = await _context.Categories.Include(x => x.Products).ToListAsync();
             if (categoryWithPro is null)
-                throw new NotFoundException("hec bir product tapılmadı");
+            {
+                _logger.LogWarning("hec bir category tapılmadı");
+                throw new NotFoundException("hec bir category tapılmadı");
+            }
 
            
 
@@ -152,7 +168,11 @@ namespace Business.Services.Concered
         {
             var categoryWithPro = await _context.Categories.Include(x => x.Products).FirstOrDefaultAsync(x=> x.Id== id);
             if (categoryWithPro is null)
+            {
+                _logger.LogWarning(" category tapılmadı");
+
                 throw new NotFoundException("Catgory tapılmadı");
+            }
 
             return new Response<CategoryDTO>
             {
@@ -171,7 +191,11 @@ namespace Business.Services.Concered
 
             var existCategory = await _categoryRepository.GetAsync(model.Id);
             if (existCategory is null)
+            {
+                _logger.LogWarning("category tapılmadı");
+
                 throw new NotFoundException("category tapılmadı");
+            }
 
             _mapper.Map(model, existCategory);
 
@@ -180,6 +204,8 @@ namespace Business.Services.Concered
             bool isExist =await _context.Categories.AnyAsync(c => c.Name.ToLower() == existCategory.Name.ToLower().Trim());
             if (isExist)
             {
+                _logger.LogWarning("bu adla category var");
+
                 throw new ValidationException("Bu adla category var");  
             };
 
@@ -188,6 +214,8 @@ namespace Business.Services.Concered
 
             if (existCategory.ImageFile == null)
             {
+                _logger.LogError("Image daxil edilmelidir");
+
                 throw new ValidationException("Image daxil edilmelidir");
             }
 
@@ -195,11 +223,14 @@ namespace Business.Services.Concered
 
             if (!existCategory.ImageFile.CheckFileSize(1000))
             {
+                _logger.LogError("Image olcusu max 1 mb olamlidir");
+
                 throw new ValidationException("Image olcusu max 1 mb olamlidir");
 
             }
             if (!existCategory.ImageFile.CheckFileType("image/jpeg"))
             {
+                _logger.LogError("Image jpg tipi olmalidir");
 
                 throw new ValidationException("Image jpg tipi olmalidir");
 
