@@ -16,7 +16,7 @@ namespace Business.Services.Abtraction
         Task<Response<List<CategoryDTO>>> GetAllAsync();
         Task<Response<CategoryDTO>> GetAsync(int id);
         Task<Response> CreateAsync(CategoryCreateDTO model);
-        Task<Response> UpdateAsync(CategoryUpdateDTO model);
+        Task<Response> UpdateAsync(int id, CategoryUpdateDTO model);
         Task<Response> DeleteAsync(int id);
 
     }

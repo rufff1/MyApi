@@ -63,6 +63,9 @@ namespace Business.Services.Concered
             await _countryRepository.CreateAsync(country);
             await _unitOfWork.CommitAsync();
 
+
+
+            _logger.LogInformation("Ugurla olke yaradildi");
             return new Response
             {
                 Message = "Ugurla olke yaradildi"
@@ -84,6 +87,8 @@ namespace Business.Services.Concered
              _countryRepository.Delete(country);
             await _unitOfWork.CommitAsync();
 
+
+            _logger.LogInformation($"{nameof(Country)} deleted");
             return new Response
             {
                 Message = "country ugurla silindi"
@@ -102,6 +107,8 @@ namespace Business.Services.Concered
                 throw new NotFoundException("country tapilmadi");
             }
 
+
+            _logger.LogInformation("olkeler ugurla getirildi");
             return new Response<List<CountryResponseDTO>>
             {
                 Data = _mapper.Map<List<CountryResponseDTO>>(response),
@@ -120,6 +127,7 @@ namespace Business.Services.Concered
             }
 
 
+            _logger.LogInformation($"Could not find country: {id}");
             return new Response<CountryResponseDTO>
             {
                 Data = _mapper.Map<CountryResponseDTO>(response),
@@ -128,7 +136,7 @@ namespace Business.Services.Concered
 
         }
 
-        public async Task<Response> UpdateAsync(CountryUpdateDTO model)
+        public async Task<Response> UpdateAsync(int id, CountryUpdateDTO model)
         {
             var result = await new CountryDTOUpdateValidator().ValidateAsync(model);
             if (!result.IsValid)
@@ -138,7 +146,7 @@ namespace Business.Services.Concered
                 throw new ValidationException(result.Errors);
             }
 
-            var existCountry = await _countryRepository.GetAsync(model.Id);
+            var existCountry = await _countryRepository.GetAsync(id);
 
             if (existCountry == null)
             {
@@ -162,6 +170,8 @@ namespace Business.Services.Concered
                     await _unitOfWork.CommitAsync();
 
 
+
+            _logger.LogInformation($"Country updated: {model.CountryName}");
             return new Response
             {
                 Message = "country ugurla modified olundu"

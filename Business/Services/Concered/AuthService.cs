@@ -8,6 +8,7 @@ using Business.Validators.Auth;
 using Common.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -25,16 +26,16 @@ namespace Business.Services.Concered
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-
+        private readonly ILogger<AuthService> _logger;
         public AuthService(UserManager<User> userManager,
                            RoleManager<IdentityRole> roleManager,
-                           IMapper mapper,IConfiguration configuration)
+                           IMapper mapper,IConfiguration configuration,ILogger<AuthService> logger)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
             _configuration = configuration;
-           
+           _logger = logger;
         }
 
         public async Task<Response<AuthLoginResponseDTO>> LoginAsync(AuthLoginDTO model)
@@ -42,18 +43,21 @@ namespace Business.Services.Concered
             var result = await new AuthLoginDTOValidator().ValidateAsync(model);
             if (!result.IsValid)
             {
+                _logger.LogError("model validator error");
                 throw new ValidationException(result.Errors);
             }                                     
             var user = await _userManager.FindByNameAsync(model.Email);
 
             if (user is null)
-            { 
+            {
+                _logger.LogError("Poçt ünvanı və ya şifrə yalnışdır");
                 throw new UnauthorizedException("Poçt ünvanı və ya şifrə yalnışdır");
             }
 
             var isSucceededLoginCheck = await _userManager.CheckPasswordAsync(user, model.Password);
             if (!isSucceededLoginCheck)
-            { 
+            {
+                _logger.LogError("Poçt ünvanı və ya şifrə yalnışdır");
                 throw new UnauthorizedException("Poçt ünvanı və ya şifrə yalnışdır");
             }
 
@@ -87,6 +91,8 @@ namespace Business.Services.Concered
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
+
+            _logger.LogInformation("ugurla login olundu");
             return new Response<AuthLoginResponseDTO>
             {
                 Data = new AuthLoginResponseDTO
@@ -108,11 +114,17 @@ namespace Business.Services.Concered
 
             var result = await new AuthRegisterDTOValidator().ValidateAsync(model);
             if (!result.IsValid)
+            {
+                _logger.LogError("model validator error");
                 throw new ValidationException(result.Errors);
+            }
 
             var user = await _userManager.FindByNameAsync(model.Email);
             if (user is not null)
+            {
+                _logger.LogError($"{model.Email} bu email artig movcuddur");
                 throw new ValidationException("Bu istifadəçi artıq mövcuddur");
+            }
 
                 
 
@@ -124,19 +136,28 @@ namespace Business.Services.Concered
             var registerResult = await _userManager.CreateAsync(user, model.Password);
 
             if (!registerResult.Succeeded)
+            {
+                _logger.LogError($"Failed to register {model.Email}");
                 throw new ValidationException(registerResult.Errors);
+            }
           
             var role = await _roleManager.FindByNameAsync("User");
             if (role is null)
+            {
+                _logger.LogError("Rol tapılmadı");
                 throw new NotFoundException("Rol tapılmadı");
+            }
 
             user.Role = "User";
 
             var roleResult = await _userManager.AddToRoleAsync(user, role.Name ?? string.Empty);
             if (!roleResult.Succeeded)
+            {
+                _logger.LogError($"{role.Name} not found");
                 throw new ValidationException(roleResult.Errors);
+            }
 
-
+            _logger.LogInformation("İstifadəçi uğurla yaradıldı");
             return new Response
             {
                 Message = "İstifadəçi uğurla yaradıldı"

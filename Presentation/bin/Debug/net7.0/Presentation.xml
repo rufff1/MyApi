@@ -83,7 +83,7 @@
             </summary>
             <param name="model"></param>
         </member>
-        <member name="M:Presentation.Controllers.CategoryController.UpdateAsync(Business.DTOs.Category.Request.CategoryUpdateDTO)">
+        <member name="M:Presentation.Controllers.CategoryController.UpdateAsync(System.Int32,Business.DTOs.Category.Request.CategoryUpdateDTO)">
             <summary>
             category redaktə olunması üçün
             </summary>
@@ -106,7 +106,7 @@
             Country siyahısını götürmək üçün
             </summary>
         </member>
-        <member name="M:Presentation.Controllers.CountryController.UpdateAyns(Business.DTOs.Country.Request.CountryUpdateDTO)">
+        <member name="M:Presentation.Controllers.CountryController.UpdateAyns(System.Int32,Business.DTOs.Country.Request.CountryUpdateDTO)">
             <summary>
             Country redaktə olunması üçün
             </summary>
@@ -233,7 +233,7 @@
             </summary>
             <param name="model"></param>
         </member>
-        <member name="M:Presentation.Controllers.TeamController.UpdateAsync(Business.DTOs.Team.Request.TeamUpdateDTO)">
+        <member name="M:Presentation.Controllers.TeamController.UpdateAsync(System.Int32,Business.DTOs.Team.Request.TeamUpdateDTO)">
             <summary>
             team redaktə olunması üçün
             </summary>

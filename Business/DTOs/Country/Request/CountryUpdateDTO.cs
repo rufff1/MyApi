@@ -9,7 +9,7 @@ namespace Business.DTOs.Country.Request
     public class CountryUpdateDTO
     {
 
-        public int Id { get; set; }
+    
         public string CountryName { get; set; }
 
     }

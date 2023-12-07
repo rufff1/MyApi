@@ -1,6 +1,7 @@
 ﻿
 
 
+
 using Business.DTOs.Common;
 using Business.DTOs.Country.Request;
 using Business.DTOs.Country.Response;
@@ -60,9 +61,9 @@ namespace Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
         #endregion
         [HttpPut("Update")]
-        public async Task<Response> UpdateAyns(CountryUpdateDTO model)
+        public async Task<Response> UpdateAyns(int id, CountryUpdateDTO model)
         {
-            return await _countryService.UpdateAsync(model);
+            return await _countryService.UpdateAsync(id,model);
            
         }
 

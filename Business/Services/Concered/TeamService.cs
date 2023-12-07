@@ -87,8 +87,8 @@ namespace Business.Services.Concered
             await _unitOfWork.CommitAsync();
 
 
-         
 
+            _logger.LogInformation("team ugurla yaradildi");
             return new Response
             {
                 Message = "team ugurla yaradildi"
@@ -109,6 +109,8 @@ namespace Business.Services.Concered
              _teamRepository.Delete(team);
             await _unitOfWork.CommitAsync();
 
+
+            _logger.LogInformation("team ugurla silindi");
             return new Response
             {
                 Message = "team ugurla silindi"
@@ -125,7 +127,7 @@ namespace Business.Services.Concered
                 throw new NotFoundException("team movcud deyil");
             }
 
-
+            _logger.LogInformation("teamlar ugurla getirildi");
             return new Response<List<TeamResponseDTO>>
             {
                 Data = _mapper.Map<List<TeamResponseDTO>>(response),
@@ -138,8 +140,8 @@ namespace Business.Services.Concered
             var response = await _teamRepository.GetAsync(id);
             if (response == null) throw new NotFoundException("team tapilmadi");
 
-           
 
+            _logger.LogInformation("team ugurla getirildi");
             return new Response<TeamResponseDTO>
             {
                 Data = _mapper.Map<TeamResponseDTO>(response),
@@ -148,13 +150,13 @@ namespace Business.Services.Concered
 
         }
 
-        public async Task<Response> UpdateAsync(TeamUpdateDTO model)
+        public async Task<Response> UpdateAsync(int id, TeamUpdateDTO model)
         {
             var result = await new TeamUpdateDTOValidator().ValidateAsync(model);
            
                 if (!result.IsValid) {_logger.LogError("model validator error"); throw new ValidationException(result.Errors); }
 
-            var existedteam = await _teamRepository.GetAsync(model.Id);
+            var existedteam = await _teamRepository.GetAsync(id);
 
             if (existedteam == null)
             {
@@ -201,6 +203,8 @@ namespace Business.Services.Concered
 
             await _unitOfWork.CommitAsync();
 
+
+            _logger.LogInformation("team ugurla modified olundu");
             return new Response
             {
                 Message = "team ugurla modified olundu"

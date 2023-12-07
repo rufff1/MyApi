@@ -11,7 +11,6 @@ namespace Business.DTOs.Team.Request
 {
     public class TeamUpdateDTO
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public byte Age { get; set; }

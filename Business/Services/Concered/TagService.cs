@@ -61,7 +61,7 @@ namespace Business.Services.Concered
             await _tagRepository.CreateAsync(tag);
                 await _unitOfWork.CommitAsync();
 
-
+            _logger.LogInformation("tag ugurla yaradildi");
                 return new Response
                 {
                     Message = "tag ugurla yaradildi"
@@ -85,7 +85,7 @@ namespace Business.Services.Concered
 
             await _unitOfWork.CommitAsync();
 
-
+            _logger.LogInformation($"Deleted tag {id}");
             return new Response
             {
                 Message= "tag ugurla silindi"
@@ -98,6 +98,8 @@ namespace Business.Services.Concered
                 var response = await _tagRepository.GetAllAsync();
 
 
+
+            _logger.LogInformation($"{response.Count} tags");
                 return new Response<List<TagResponseDTO>>
                 {
                     Data = _mapper.Map<List<TagResponseDTO>>(response),
@@ -184,6 +186,8 @@ namespace Business.Services.Concered
                 throw new ValidationException("nese duzgun getmedi");
             }
 
+
+            _logger.LogInformation($"Tag updated: {model.Name}");
             return new Response
             {
                 Message = "tag ugurla modified olundu"

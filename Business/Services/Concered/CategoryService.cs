@@ -113,7 +113,7 @@ namespace Business.Services.Concered
 
 
 
-
+            _logger.LogInformation("category ugurla yaradildi");
             return new Response
             {
                 Message = "category ugurla yaradildi"
@@ -135,6 +135,9 @@ namespace Business.Services.Concered
                _categoryRepository.Delete(category);
                await _unitOfWork.CommitAsync();
 
+
+
+            _logger.LogInformation("Category uğurla silindi");
             return new Response
             {
                 Message = "Category uğurla silindi"
@@ -152,8 +155,10 @@ namespace Business.Services.Concered
                 throw new NotFoundException("hec bir category tapılmadı");
             }
 
-           
 
+
+
+            _logger.LogInformation("All categories retrieved successfully.");
             return new Response<List<CategoryDTO>>
             {
                 Data = _mapper.Map<List<CategoryDTO>>(categoryWithPro),
@@ -174,6 +179,9 @@ namespace Business.Services.Concered
                 throw new NotFoundException("Catgory tapılmadı");
             }
 
+
+            _logger.LogInformation("categorie retrieved successfully.");
+
             return new Response<CategoryDTO>
             {
                 Data = _mapper.Map<CategoryDTO>(categoryWithPro),
@@ -183,13 +191,13 @@ namespace Business.Services.Concered
         }
 
 
-        public async Task<Response> UpdateAsync(CategoryUpdateDTO model)
+        public async Task<Response> UpdateAsync(int id, CategoryUpdateDTO model)
         {
             var result = await new CategoryUpdateDTOValidator().ValidateAsync(model);
             if (!result.IsValid)
                 throw new ValidationException(result.Errors);
 
-            var existCategory = await _categoryRepository.GetAsync(model.Id);
+            var existCategory = await _categoryRepository.GetAsync(id);
             if (existCategory is null)
             {
                 _logger.LogWarning("category tapılmadı");
@@ -242,6 +250,9 @@ namespace Business.Services.Concered
             _categoryRepository.Update(existCategory);
             await _unitOfWork.CommitAsync();
 
+
+
+            _logger.LogInformation("category uğurla redaktə olundu");
             return new Response
             {
                 Message = "category uğurla redaktə olundu"

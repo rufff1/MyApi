@@ -58,6 +58,8 @@ namespace Business.Services.Concered
             await _teamPositionRepository.CreateAsync(teamPosition);
             await _unitOfWork.CommitAsync();
 
+
+            _logger.LogInformation("Position ugurla yaradildi");
             return new Response
             {
                 Message = "Position ugurla yaradildi"
@@ -76,7 +78,7 @@ namespace Business.Services.Concered
              _teamPositionRepository.Delete(position);
             await _unitOfWork.CommitAsync();
 
-
+            _logger.LogInformation($"Deleted {position.Id}");
             return new Response { Message = "Position ugurla silindi" };
                 
         }
@@ -86,6 +88,8 @@ namespace Business.Services.Concered
             var response = await _teamPositionRepository.GetAllAsync();
 
 
+
+            _logger.LogInformation("Butun Taglar getirildi");
             return new Response<List<TeamPositionReponseDTO>>
             {
                 Data = _mapper.Map<List<TeamPositionReponseDTO>>(response),
@@ -99,10 +103,12 @@ namespace Business.Services.Concered
             var response = await _teamPositionRepository.GetAsync(id);
             if (response == null) { _logger.LogError("position tapilmadi"); throw new ValidationException("position tapilmadi"); }
 
+
+            _logger.LogInformation("position tapildi");
             return new Response<TeamPositionReponseDTO>
             {
                 Data = _mapper.Map<TeamPositionReponseDTO>(response),
-                Message = "position ugurlar getirildi"
+                Message = "position tapildi"
             };
         }
 
@@ -141,6 +147,8 @@ namespace Business.Services.Concered
                
                await _unitOfWork.CommitAsync();
 
+
+            _logger.LogInformation("Position ugurla moified olundu");
             return new Response
             {
                 Message = "Position ugurla moified olundu"

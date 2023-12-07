@@ -13,7 +13,7 @@ namespace Business.Services.Abtraction
     public interface ICountryService
     {
         Task<Response> CreateAsync(CountryCreateDTO model);
-        Task<Response> UpdateAsync(CountryUpdateDTO model);
+        Task<Response> UpdateAsync(int id,CountryUpdateDTO model);
         Task<Response> DeleteAsync(int id);
         Task<Response<CountryResponseDTO>> GetAsync(int id);
         Task<Response<List<CountryResponseDTO>>> GetAllAsync();

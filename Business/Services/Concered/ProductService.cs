@@ -139,7 +139,7 @@ namespace Business.Services.Concered
 
 
 
-
+            _logger.LogInformation("product ugurla yaradildi");
             return new Response
             {
                 
@@ -162,6 +162,8 @@ namespace Business.Services.Concered
             _productRepository.Delete(product);
             await _unitOfWork.CommitAsync();
 
+
+            _logger.LogInformation($"Deleted Product{id}");
             return new Response
             {
                 Message = "product uğurla silindi"
@@ -180,6 +182,8 @@ namespace Business.Services.Concered
                 throw new NotFoundException("product tapilmadi");
             }
 
+
+            _logger.LogInformation($"id-si {id} olan product tapildi");
             return new Response<ProductResponseDTO>
             {
                 Data = _mapper.Map<ProductResponseDTO>(productWithCategory),
@@ -207,6 +211,8 @@ namespace Business.Services.Concered
 
 
            
+
+            _logger.LogInformation($"{products.Count} products");   
           
                 return new Response<List<ProductGetTags>>
                 {
@@ -325,9 +331,9 @@ namespace Business.Services.Concered
            
                 _productRepository.Update(existProduct);
                 await _unitOfWork.CommitAsync();
-            
-          
 
+
+            _logger.LogInformation($"Product updated: {model.Name}");
             return new Response
             {
                 Message = "product uğurla redaktə olundu"

@@ -291,6 +291,8 @@ namespace Business.Services.Concered
                 _logger.LogWarning("Image daxil edilmelidir");
 
 
+
+
                 throw new ValidationException("Image daxil edilmelidir");
             }
 

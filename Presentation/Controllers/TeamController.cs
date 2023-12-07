@@ -130,9 +130,9 @@ namespace Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
         #endregion
         [HttpPut("Update")]
-        public async Task<Response> UpdateAsync([FromForm] TeamUpdateDTO model)
+        public async Task<Response> UpdateAsync(int id, [FromForm] TeamUpdateDTO model)
         {
-            return await _teamService.UpdateAsync(model);
+            return await _teamService.UpdateAsync(id,model);
         }
 
 

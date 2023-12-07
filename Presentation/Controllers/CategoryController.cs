@@ -74,9 +74,9 @@ namespace Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
         #endregion
         [HttpPut("Update")]
-        public async Task<Response> UpdateAsync([FromForm] CategoryUpdateDTO model)
+        public async Task<Response> UpdateAsync(int id, [FromForm]  CategoryUpdateDTO model)
         {
-            return await _categoryService.UpdateAsync(model);
+            return await _categoryService.UpdateAsync(id,model);
         }
 
         #region Documentation
