@@ -79,7 +79,7 @@ namespace Business.Services.Concered
 
             if (country == null)
             {
-                _logger.LogError("model validator error");
+                _logger.LogError("country tapilmadi");
 
                 throw new NotFoundException("country tapilmadi");
             }

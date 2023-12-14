@@ -14,7 +14,11 @@ namespace Business.MappingProfiles
         public AuthMappingProfile() :base()
         {
             CreateMap<AuthRegisterDTO, User>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email)).ReverseMap();
+
+
+
+
         }
     }
 }

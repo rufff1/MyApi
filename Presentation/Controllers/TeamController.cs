@@ -5,11 +5,13 @@ using Business.DTOs.TeamPosition.Response;
 using Business.Helpers;
 using Business.Services.Abtraction;
 using Business.Services.Concered;
+using ClosedXML.Excel;
 using Common.Entities;
 using DataAccess.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Presentation.Controllers
 {
@@ -29,23 +31,87 @@ namespace Presentation.Controllers
 
         }
 
+
+        [HttpGet("ExportExcel")]
+        public ActionResult ExportExcel()
+        {
+            var teamData = GetTeamData();
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.AddWorksheet(teamData, "Team Records");
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    wb.SaveAs(ms);
+                    return File(ms.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Sample.xlsx");
+                }
+              
+
+            }
+        }
+
+
+
+        [NonAction]
+        private DataTable GetTeamData()
+        {
+            DataTable data = new DataTable();
+            data.TableName = "TeamData";
+            data.Columns.Add("Id", typeof(int));
+            data.Columns.Add("Name", typeof(string));
+            data.Columns.Add("Surname", typeof(string));
+            data.Columns.Add("Age", typeof(byte));
+            data.Columns.Add("Email", typeof(string));
+            data.Columns.Add("Info", typeof(string));
+            data.Columns.Add("Country", typeof(string));
+
+            var list = _context.Teams.Include(c => c.Country).ToList();
+
+
+            if (list.Count > 0)
+            {
+                list.ForEach(item =>
+                {
+                    data.Rows.Add(item.Id, item.Name, item.Surname, item.Age, item.Email, item.Info, item.Country.CountryName);
+                });
+            }
+
+            return data;
+        }
+
+
+        #region Documentation
+        /// <summary>
+        /// team id parametrinə görə email gondermek üçün
+        /// </summary>
+        #endregion
         [HttpPost("SendMailById")]
+
         public async Task<IActionResult> SendMailAllById(int id,Mailrequest mailrequest)
         {
 
-                   var team =  await _context.Teams.FirstOrDefaultAsync(t => t.Id == id);
+             var team =  await _context.Teams.FirstOrDefaultAsync(t => t.Id == id);
+
+            if (team == null) { return NotFound("Team tapilmadi"); }
+
 
                 mailrequest.Body = GetHtmlcontent();
                 await _emailService.SendEmailAsync(mailrequest, team.Email );
 
 
 
-            return Ok();
+             return Ok("Email gonderildi");
 
         }
 
 
+        #region Documentation
+        /// <summary>
+        ///butun team-lere email gondermek üçün
+        /// </summary>
+        #endregion
         [HttpPost("SendMailAll")]
+
         public async Task<IActionResult> SendMailAll(Mailrequest mailrequest)
         {
             foreach (var item in (await _context.Teams.Where(x=>  x.Email != null).ToListAsync()))
@@ -56,14 +122,14 @@ namespace Presentation.Controllers
             }
              
                 
-                return Ok();
+                return Ok("email her kese gonderildi");
           
         }
 
 
 
 
-
+        [NonAction]
         private string GetHtmlcontent()
         {
             string Response = "<div style=\"width:100%;background-color:lightblue;text-align:center;margin:10px\">";

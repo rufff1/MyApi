@@ -7,7 +7,6 @@ using DataAccess.Repositories.Abstract;
 using DataAccess.Repositories.Concrete;
 using Presentation.Middlewares;
 using Business.MappingProfiles;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -15,14 +14,10 @@ using System.Text;
 using Business.Services.Abstract;
 using Common.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Hosting.Server;
-using System.Web.Http;
-using System.Net.Http.Formatting;
-using Microsoft.AspNetCore.Mvc;
 using Business.Helpers;
 using Serilog;
-using Serilog.Events;
 using Serilog.Core;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +49,8 @@ builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Presentation.xml"));
@@ -64,7 +61,6 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1"
     });
 
-  
 
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -76,19 +72,19 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
     });
-   // options.OperationFilter<SecurityRequirementsOperationFilter>();
     options.AddSecurityRequirement(new OpenApiSecurityRequirement {
         {
             new OpenApiSecurityScheme {
                 Reference = new OpenApiReference {
                     Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer",
+                        Id = "Bearer"
                 }
             },
             new string[] {}
         }
     });
 });
+
 
 
 
@@ -107,9 +103,8 @@ builder.Services.AddAuthentication(options =>
             ValidIssuer = builder.Configuration["JWT:Issuer"],
             ValidateAudience = true,
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
-        };
+    };
     });
 
 
@@ -135,6 +130,27 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.Password.RequiredUniqueChars = 0;
 })
     .AddEntityFrameworkStores<AppDbContext>();
+
+
+
+
+//builder.Services.AddCors(p => p.AddDefaultPolicy(builder =>
+//{
+//    builder.WithOrigins("https://localhost:44395/");
+//    builder.AllowAnyMethod();
+//    builder.AllowAnyHeader();
+
+//}));
+
+//builder.Services.AddCors(p => p.AddPolicy("policy1", builder =>
+//{
+//    builder.WithOrigins("https://localhost:44400/");
+//    builder.AllowAnyMethod();
+//    builder.AllowAnyHeader();
+
+//}));
+
+
 
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
@@ -219,9 +235,9 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
-
+//app.UseCors();
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 app.UseMiddleware<CustomExceptionMiddleware>();
 

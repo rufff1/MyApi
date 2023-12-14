@@ -1,17 +1,17 @@
-﻿
-
-
-
-using Business.DTOs.Common;
+﻿using Business.DTOs.Common;
 using Business.DTOs.Country.Request;
 using Business.DTOs.Country.Response;
 using Business.Services.Abtraction;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class CountryController : ControllerBase
     {
         public readonly ICountryService _countryService;

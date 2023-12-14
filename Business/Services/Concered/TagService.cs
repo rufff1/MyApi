@@ -122,10 +122,11 @@ namespace Business.Services.Concered
                     throw new NotFoundException("Tag Tapilmadi");
 
             }
+                var tag = _mapper.Map<TagResponseDTO>(response);
 
                 return new Response<TagResponseDTO>
                 {
-                    Data = _mapper.Map<TagResponseDTO>(response),
+                    Data = tag,
                     Message = "Tag tapildi"
                 };
             

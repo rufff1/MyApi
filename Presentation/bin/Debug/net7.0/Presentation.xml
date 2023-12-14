@@ -16,6 +16,12 @@
             </summary>
             <param name="model"></param>
         </member>
+        <member name="M:Presentation.Controllers.AuthController.ChangePaswoordAsync(Business.DTOs.Auth.Request.ChangePaswoordDTO)">
+            <summary>
+            İstifadəçilərin sifre deyismesi üçün
+            </summary>
+            <param name="model"></param>
+        </member>
         <member name="M:Presentation.Controllers.BlogController.GetAllAsync">
             <summary>
             blog siyahısını götürmək üçün
@@ -215,6 +221,16 @@
             tag yaradılması üçün
             </summary>
             <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TeamController.SendMailAllById(System.Int32,Business.Helpers.Mailrequest)">
+            <summary>
+            team id parametrinə görə email gondermek üçün
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.TeamController.SendMailAll(Business.Helpers.Mailrequest)">
+             <summary>
+            butun team-lere email gondermek üçün
+             </summary>
         </member>
         <member name="M:Presentation.Controllers.TeamController.GetAsync(System.Int32)">
             <summary>

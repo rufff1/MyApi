@@ -3,7 +3,6 @@ using AutoMapper;
 using Business.DTOs.Team.Request;
 using Business.DTOs.Team.Response;
 using Business.DTOs.Common;
-
 using Business.Exceptions;
 using Business.Services.Abtraction;
 using Business.Validators.Team;
@@ -15,8 +14,8 @@ using FirstMyApi.Extensions;
 using FirstMyApi.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Common.Constants;
 using Microsoft.Extensions.Logging;
+
 
 namespace Business.Services.Concered
 {
@@ -25,10 +24,13 @@ namespace Business.Services.Concered
         public readonly IMapper _mapper;
         private readonly ITeamRepository _teamRepository;
         private readonly IUnitOfWork _unitOfWork;
-       private readonly AppDbContext _context;
+        private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
         private readonly ILogger<TeamService> _logger;
-        public TeamService(IMapper mapper, ITeamRepository teamRepository ,IUnitOfWork unitOfWork,IWebHostEnvironment env,AppDbContext context, ILogger<TeamService> logger )
+    
+
+
+        public TeamService( IMapper mapper, ITeamRepository teamRepository ,IUnitOfWork unitOfWork,IWebHostEnvironment env,AppDbContext context, ILogger<TeamService> logger )
         {
            
             _mapper = mapper;
@@ -37,7 +39,12 @@ namespace Business.Services.Concered
             _env = env;
             _context = context;
             _logger = logger;
+
+         
         }
+
+
+
 
 
         public async Task<Response> CreateAsync(TeamCreateDTO model)
@@ -140,11 +147,11 @@ namespace Business.Services.Concered
             var response = await _teamRepository.GetAsync(id);
             if (response == null) throw new NotFoundException("team tapilmadi");
 
-
+            var team = _mapper.Map<TeamResponseDTO>(response);
             _logger.LogInformation("team ugurla getirildi");
             return new Response<TeamResponseDTO>
             {
-                Data = _mapper.Map<TeamResponseDTO>(response),
+                Data = team,
                 Message = "team ugurla getirildi"
             };
 

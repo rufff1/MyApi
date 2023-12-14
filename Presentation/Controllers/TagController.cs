@@ -1,20 +1,20 @@
-﻿
-using Business.DTOs.Category.Response;
-using Business.DTOs.Common;
+﻿using Business.DTOs.Common;
 using Business.DTOs.Tag.Request;
 using Business.DTOs.Tag.Response;
-using Business.Exceptions;
 using Business.Services.Abtraction;
-using Business.Services.Concered;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
+
+
 
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
+    [Authorize(Roles = "User", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class TagController : ControllerBase
     {
         public readonly ITagService _tagService;
@@ -35,20 +35,28 @@ namespace Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Response))]
         #endregion
         [HttpGet("GetById")]
+       
         public async Task<Response<TagResponseDTO>> GetAsync(int id)
         {                                           
 
             return await _tagService.GetAsync(id);
         }
 
+
+
+          
         #region Documentation
         /// <summary>
         /// Tag siyahısını götürmək üçün
         /// </summary>
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<List<TagResponseDTO>>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Response))]
+  
+
         #endregion
+        
         [HttpGet("GetAll")]
+     
         public async Task<Response<List<TagResponseDTO>>> GetAllAsync()
         {
             return await _tagService.GetAllAsync();

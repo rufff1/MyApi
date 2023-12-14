@@ -1,16 +1,18 @@
 ﻿using Business.DTOs.Blog.Request;
 using Business.DTOs.Blog.Response;
 using Business.DTOs.Common;
-using Business.DTOs.Product.Request;
-using Business.DTOs.Product.Response;
+
 using Business.Services.Abtraction;
-using Microsoft.AspNetCore.Http;
+using Business.Services.Concered;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class BlogController : ControllerBase
     {
         private readonly IBlogService _blogService;
@@ -35,6 +37,7 @@ namespace Presentation.Controllers
 
 
         [HttpGet()]
+      
         public async Task<Response<List<BlogGetCategoryTag>>> GetAllAsync()
         {
             return await _blogService.GetAllAsync();
@@ -56,6 +59,7 @@ namespace Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Response))]
         #endregion
         [HttpGet("GetById")]
+        
         public async Task<Response<BlogResponseDTO>> GetAsync(int id)
         {
             return await _blogService.GetAsync(id);

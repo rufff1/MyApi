@@ -11,8 +11,8 @@ namespace Common.Entities
 {
     public class User : IdentityUser
     {
-        [Required]
-        public string Role { get; set; }
+        public string RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
 
     }
 }

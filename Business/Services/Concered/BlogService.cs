@@ -191,6 +191,8 @@ namespace Business.Services.Concered
                 throw new NotFoundException("blog tapilmadi");
             }
 
+            _logger.LogInformation("ugurlu alindi");
+
             return new Response<List<BlogGetCategoryTag>>
             {
                 Data = _mapper.Map<List<BlogGetCategoryTag>>(blogs),
