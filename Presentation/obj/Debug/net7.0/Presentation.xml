@@ -222,6 +222,11 @@
             </summary>
             <param name="model"></param>
         </member>
+        <member name="M:Presentation.Controllers.TeamController.ExportExcel">
+             <summary>
+            butun team-leri export excel/file 
+             </summary>
+        </member>
         <member name="M:Presentation.Controllers.TeamController.SendMailAllById(System.Int32,Business.Helpers.Mailrequest)">
             <summary>
             team id parametrinə görə email gondermek üçün

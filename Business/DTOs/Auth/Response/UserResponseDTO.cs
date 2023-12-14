@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Business.DTOs.Auth.Response
 {
-    internal class UserResponseDTO
+    public class UserResponseDTO
     {
+
     }
 }

@@ -8,6 +8,8 @@ using Business.Services.Concered;
 using ClosedXML.Excel;
 using Common.Entities;
 using DataAccess.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,8 +33,13 @@ namespace Presentation.Controllers
 
         }
 
-
+        #region Documentation
+        /// <summary>
+        ///butun team-leri export excel/file 
+        /// </summary>
+        #endregion
         [HttpGet("ExportExcel")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult ExportExcel()
         {
             var teamData = GetTeamData();

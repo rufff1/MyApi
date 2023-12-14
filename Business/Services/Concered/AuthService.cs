@@ -4,26 +4,22 @@
 using AutoMapper;
 using Business.DTOs.Auth.Request;
 using Business.DTOs.Auth.Response;
-using Business.DTOs.Blog.Response;
 using Business.DTOs.Common;
 using Business.Exceptions;
 using Business.Services.Abtraction;
 using Business.Validators.Auth;
 using Common.Constants.UserRole;
 using Common.Entities;
-using FirstMyApi.Extensions;
+using Irony.Parsing;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web.Http.ModelBinding;
+
 
 namespace Business.Services.Concered
 {
@@ -96,33 +92,6 @@ namespace Business.Services.Concered
 
         }
 
-     
-        public string CreateTokenAsync(IEnumerable<Claim> claims)
-        {
-            
-
-
-            //var userRoles = await _userManager.GetRolesAsync(user);
-            //foreach (var userRole in userRoles)
-            //{
-            //    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, userRole));
-            //}
-
-
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-
-            var token = new JwtSecurityToken(
-           issuer: _configuration["JWT:Issuer"],
-           audience: _configuration["JWT:Audience"],
-           expires: DateTime.Now.AddDays(1),
-           signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-           );
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
-
-        }
 
 
         public async Task<Response<AuthLoginResponseDTO>> LoginAsync(AuthLoginDTO model)
@@ -136,8 +105,7 @@ namespace Business.Services.Concered
                 _logger.LogError("model validator error");
                 throw new ValidationException(result.Errors);
             }
-            try
-            {
+          
                 var user = await _userManager.FindByNameAsync(model.Email);
                 if (user is null)
                 {
@@ -154,15 +122,13 @@ namespace Business.Services.Concered
                 throw new UnauthorizedException("Poçt ünvanı və ya şifrə yalnışdır");
             }
 
+                var claims = new List<Claim>()
+                {
+                  new Claim(ClaimTypes.NameIdentifier, user.Id),
+                  new Claim(ClaimTypes.Name, user.UserName),
+                  new Claim(ClaimTypes.Email, user.Email),
 
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email),
-
-
-            };
+                };
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
@@ -174,36 +140,50 @@ namespace Business.Services.Concered
             }
 
 
-            string token = CreateTokenAsync(claims);
-            string refreshToken = GenerateRefreshToken();
-            await _userManager.UpdateAsync(user);
+            // string token = await CreateTokenAsync();
+
+            //string refreshToken = GenerateRefreshToken();
+
+            //await _userManager.UpdateAsync(user);
+
+            //return new Response<AuthLoginResponseDTO>
+            //{
+            //    Data = new AuthLoginResponseDTO
+            //    {
+            //        Token = token,
+            //       //  RefreshToken = refreshToken
+            //    },
+
+            //    Message = "ugurla login olundu"
+            //};
+
+
+
+
             _logger.LogInformation("ugurla login olundu");
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:Issuer"],
+                audience: _configuration["JWT:Audience"],
+                expires: DateTime.Now.AddHours(3),
+                claims: claims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
 
             return new Response<AuthLoginResponseDTO>
             {
                 Data = new AuthLoginResponseDTO
                 {
-                    Token = token,
-                    RefreshToken = refreshToken
-                },
-              
-                Message = "ugurla login olundu"
+                    Token = new JwtSecurityTokenHandler().WriteToken(token)
+        }
             };
-            }
-            catch (Exception e)
-            {
-
-                int a = 32;
-            }
-
-
-            return null;
 
         }
 
 
 
-        public async Task<Response> RegisterAsync(AuthRegisterDTO model)
+        public async Task<Response> RegisterAsync(AuthRegisterDTO model) 
         {
 
             var result = await new AuthRegisterDTOValidator().ValidateAsync(model);
@@ -233,7 +213,10 @@ namespace Business.Services.Concered
             }
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+            {
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+            }
+
 
             if (await _roleManager.RoleExistsAsync(UserRoles.User))
             {
@@ -249,69 +232,88 @@ namespace Business.Services.Concered
           
         }
 
+        //public async Task<string> CreateTokenAsync()
+        //{
+
+
+        //    var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+        //    var token = new JwtSecurityToken(
+        //   issuer: _configuration["JWT:Issuer"],
+        //   audience: _configuration["JWT:Audience"],
+        //   expires: DateTime.Now.AddDays(1),
+        //   signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+        //   );
+
+
+
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+
+
+
+        //}
+
+
+
+        //public async Task<RefreshModel> GetRefreshToken(RefreshModel model)
+        //{
+
+        //    var principal = GetPrincipalFromExpiredToken(model.Token);
+        //    string username = principal.Identity.Name;
+        //    var user = await _userManager.FindByNameAsync(username);
+
+        //    if (user == null || user.RefreshToken != model.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+        //    {
+
+        //        return model;
+        //    }
+        //    var claims = new List<Claim>()
+        //    {
+        //        new Claim(ClaimTypes.Email, user.Email),
+
+        //    };
+
+
+        //    var newToken = CreateTokenAsync(claims);
+        //    var newRefreshToken = GenerateRefreshToken();
+
+        //    user.RefreshToken = newRefreshToken;
+        //    await _userManager.UpdateAsync(user);
+
+        //    model.Token = newToken;
+        //    model.RefreshToken = newRefreshToken;
+        //    return model;
+        //}
 
 
 
 
-        public async Task<RefreshModel> GetRefreshToken(RefreshModel model)
-        {
-           
-            var principal = GetPrincipalFromExpiredToken(model.Token);
-            string username = principal.Identity.Name;
-            var user = await _userManager.FindByNameAsync(username);
+        //private static string GenerateRefreshToken()
+        //{
+        //    var randomNumber = new byte[64];
+        //    using var rng = RandomNumberGenerator.Create();
+        //    rng.GetBytes(randomNumber);
+        //    return Convert.ToBase64String(randomNumber);
+        //}
 
-            if (user == null || user.RefreshToken != model.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
-            {
-               
-                return model;
-            }
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Email, user.Email),
+        //private ClaimsPrincipal GetPrincipalFromExpiredToken(string? token)
+        //{
+        //    var tokenValidationParameters = new TokenValidationParameters
+        //    {
+        //        ValidateAudience = false,
+        //        ValidateIssuer = false,
+        //        ValidateIssuerSigningKey = true,
+        //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTKey:Secret"])),
+        //        ValidateLifetime = false
+        //    };
 
-            };
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+        //    if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+        //        throw new SecurityTokenException("Invalid token");
 
-          
-            var newToken = CreateTokenAsync(claims);
-            var newRefreshToken = GenerateRefreshToken();
-
-            user.RefreshToken = newRefreshToken;
-            await _userManager.UpdateAsync(user);
-
-            model.Token = newToken;
-            model.RefreshToken = newRefreshToken;
-            return model;
-        }
-
-
-
-
-        private static string GenerateRefreshToken()
-        {
-            var randomNumber = new byte[64];
-            using var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
-        }
-
-        private ClaimsPrincipal GetPrincipalFromExpiredToken(string? token)
-        {
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTKey:Secret"])),
-                ValidateLifetime = false
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
-            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                throw new SecurityTokenException("Invalid token");
-
-            return principal;
-        }
+        //    return principal;
+        //}
 
 
 
